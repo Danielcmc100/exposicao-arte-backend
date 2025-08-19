@@ -1,0 +1,9 @@
+[project]
+name = "exposicao-arte-backend"
+version = "0.1.0"
+description = "Sistema para artistas locais divulgarem suas obras, projetos e eventos culturais, promovendo arte acessível."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.116.1",
+]
