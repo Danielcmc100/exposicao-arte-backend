@@ -1,17 +1,19 @@
+from typing import Sequence
+
 from sqlmodel import Session, select
 
-from models.usuario import UsuarioBase, UsuarioCreate, UsuarioDB
+from models.usuario import UsuarioDB
 
 
-def buscar_usuarios(session: Session):
+def buscar_usuarios(session: Session) -> Sequence[UsuarioDB]:
     return session.exec(select(UsuarioDB)).all()
 
 
-def buscar_usuario_por_id(usuario_id, session):
+def buscar_usuario_por_id(usuario_id: int, session: Session) -> UsuarioDB | None:
     return session.get(UsuarioDB, usuario_id)
 
 
-def adicionar_usuario(usuario: UsuarioDB, session) -> UsuarioDB:
+def adicionar_usuario(usuario: UsuarioDB, session: Session) -> UsuarioDB:
     session.add(usuario)
     session.commit()
     session.refresh(usuario)
@@ -19,7 +21,7 @@ def adicionar_usuario(usuario: UsuarioDB, session) -> UsuarioDB:
 
 
 def atualizar_usuario_bd(
-    usuario_id: int, usuario: UsuarioCreate, session: Session
+    usuario_id: int, usuario: UsuarioDB, session: Session
 ) -> UsuarioDB | None:
     usuario_existente = session.get(UsuarioDB, usuario_id)
     if not usuario_existente:
@@ -31,7 +33,7 @@ def atualizar_usuario_bd(
     return usuario_existente
 
 
-def remover_usuario(usuario_id: int, session: Session) -> UsuarioBase | None:
+def remover_usuario(usuario_id: int, session: Session) -> UsuarioDB | None:
     usuario_existente = buscar_usuario_por_id(usuario_id, session)
     if not usuario_existente:
         return None
