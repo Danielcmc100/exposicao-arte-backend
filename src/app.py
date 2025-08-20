@@ -1,11 +1,23 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
-from cachorro import rota
+from database import init_db
+from routers.usuario import rota
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
+
 
 @app.get("/")
 def read_root():
     return {"message": "Hello, World!"}
+
 
 app.include_router(rota)
