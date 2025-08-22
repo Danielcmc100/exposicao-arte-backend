@@ -13,6 +13,17 @@ Backend API para sistema de exposição de arte desenvolvido com FastAPI.
 Baixe e instale o uv seguindo a documentação oficial:
 https://docs.astral.sh/uv/
 
+### 2. Clonar o repositório
+```bash
+```
+
+### 3. Copie o arquivo de configuração
+Crie um arquivo `.env` na raiz do projeto copiando o conteúdo do arquivo `.env.example`. Este arquivo contém as variáveis de ambiente necessárias para a aplicação.
+
+```bash
+cp .env.example .env
+```
+
 
 ## Executar o projeto
 
