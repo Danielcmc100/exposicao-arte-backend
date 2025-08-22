@@ -16,6 +16,6 @@ class UsuarioResponse(UsuarioBase):
 
 
 class UsuarioDB(UsuarioCreate, table=True):
-    __tablename__ = "usuarios"
+    __tablename__ = "usuarios"  # type: ignore
 
     id: int = Field(default=None, primary_key=True)
