@@ -15,6 +15,7 @@ https://docs.astral.sh/uv/
 
 ### 2. Clonar o repositório
 ```bash
+https://github.com/Danielcmc100/exposicao-arte-backend.git
 ```
 
 ### 3. Copie o arquivo de configuração
