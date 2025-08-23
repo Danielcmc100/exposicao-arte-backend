@@ -1,6 +1,3 @@
-# Copyright 2025 PSTG-Tech
-# All rights reserved.
-
 """Application configuration module."""
 
 from pydantic_settings import BaseSettings, SettingsConfigDict

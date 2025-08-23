@@ -63,3 +63,16 @@ uv.lock                  # Lockfile do gerenciador uv
 README.md                # Documentação do projeto
 ```
 
+## Criando uma migração de banco de dados
+
+Para criar uma nova migração, use o comando:
+
+```bash
+uv run alembic revision --autogenerate -m "Descrição da migração"
+```
+
+Aplique as migrações pendentes com:
+
+```bash
+uv run alembic upgrade head
+```
