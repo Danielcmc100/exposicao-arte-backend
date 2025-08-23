@@ -76,3 +76,10 @@ Aplique as migrações pendentes com:
 ```bash
 uv run alembic upgrade head
 ```
+
+## Docker
+Para construir e rodar o container Docker:
+```bash
+docker build -t exposicao-arte-backend .
+docker run -p 8080:8080 exposicao-arte-backend
+```
