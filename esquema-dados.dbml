@@ -1,0 +1,97 @@
+Table users {
+  id integer [primary key]
+  nome varchar
+  email varchar
+  senha varchar
+  função varchar
+  biografia varchar
+}
+
+Table links_redes {
+  id integer [primary key]
+  link varchar
+  nome_rede varchar
+  nome_usuario varchar
+  id_usuario integer
+}
+
+Ref: users.id < links_redes.id_usuario
+
+Table obras{
+    id integer [primary key]
+    titulo varchar
+    body text [note: 'Content of the post']
+    user_id integer [not null]
+    status varchar
+    created_at timestamp
+    ano_producao timestamp
+    id_categoria int
+    tecnica_criacao varchar
+    altura float
+    largura float
+    comprimento float
+    peso float
+    id_artista int
+    preco float
+    tags list[varchar]
+}
+
+Ref: users.id < obras.id_artista
+
+Table eventos{
+  id int
+  endereco varchar
+  local varchar
+  data datetime
+  id_organizador int
+  id_responsavel int
+}
+
+Ref: users.id < eventos.id_responsavel
+Ref: users.id < eventos.id_organizador
+
+table obra_evento{
+  id_obra int
+  id_evento int
+}
+
+table usuario_evento{
+  id_obra int
+  id_evento int
+}
+
+Table comentario_obras{
+  id int
+  id_obra int
+  id_usuario int
+  ativado bool
+}
+
+Table comentario_eventos{
+  id int
+  id_evento int
+  id_usuario int
+  ativado bool
+}
+
+Table avaliacoes_obras{
+  id int
+  id_obra int
+  id_usuario int
+  gostou bool
+  avaliacao int
+}
+
+Table avaliacoes_eventos{
+  id int
+  id_evento int
+  id_usuario int
+  gostou bool
+  avaliacao int
+}
+
+Table categorias{
+  id int
+  id_obra int
+  nome varchar
+}

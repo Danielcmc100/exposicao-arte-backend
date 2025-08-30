@@ -13,6 +13,18 @@ Backend API para sistema de exposição de arte desenvolvido com FastAPI.
 Baixe e instale o uv seguindo a documentação oficial:
 https://docs.astral.sh/uv/
 
+### 2. Clonar o repositório
+```bash
+https://github.com/Danielcmc100/exposicao-arte-backend.git
+```
+
+### 3. Copie o arquivo de configuração
+Crie um arquivo `.env` na raiz do projeto copiando o conteúdo do arquivo `.env.example`. Este arquivo contém as variáveis de ambiente necessárias para a aplicação.
+
+```bash
+cp .env.example .env
+```
+
 
 ## Executar o projeto
 
@@ -51,3 +63,23 @@ uv.lock                  # Lockfile do gerenciador uv
 README.md                # Documentação do projeto
 ```
 
+## Criando uma migração de banco de dados
+
+Para criar uma nova migração, use o comando:
+
+```bash
+uv run alembic revision --autogenerate -m "Descrição da migração"
+```
+
+Aplique as migrações pendentes com:
+
+```bash
+uv run alembic upgrade head
+```
+
+## Docker
+Para construir e rodar o container Docker:
+```bash
+docker build -t exposicao-arte-backend .
+docker run -p 8080:8080 exposicao-arte-backend
+```

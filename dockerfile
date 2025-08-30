@@ -6,5 +6,9 @@ COPY . .
 
 RUN uv sync
 
-CMD ["uv", "run", "fastapi", "run", "src/app.py", "--port", "8080", "--host", "0.0.0.0"]
+EXPOSE 8080
 
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["sh", "entrypoint.sh"]
+CMD uv run fastapi run src/app.py --port 8080 --host 0.0.0.0
