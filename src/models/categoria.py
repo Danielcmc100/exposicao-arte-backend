@@ -4,7 +4,6 @@ from sqlmodel import Field, SQLModel
 
 class CategoriaBase(SQLModel):
     nome: str
-    id_obra: int = Field(foreign_key="obra.id")
 
 
 class CategoriaCreate(CategoriaBase):
