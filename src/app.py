@@ -3,8 +3,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from database import init_db
-from routers.usuario import rota
-from routers.categoria import rota
+from routers.usuario import rota as usuario_rota
+from routers.categoria import rota as categoria_rota
 
 
 @asynccontextmanager
@@ -21,4 +21,5 @@ def read_root():
     return {"message": "Hello, World!"}
 
 
-app.include_router(rota)
+app.include_router(usuario_rota)
+app.include_router(categoria_rota)
