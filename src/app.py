@@ -4,6 +4,7 @@ from fastapi import FastAPI
 
 from database import init_db
 from routers.usuario import rota
+from routers.categoria import rota
 
 
 @asynccontextmanager
