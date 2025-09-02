@@ -1,5 +1,10 @@
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, SQLModel, Relationship
 from datetime import datetime
+from typing import List, Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .comentario_evento import ComentarioEventoDB
+
 
 class EventoBase(SQLModel):
     endereco: str
@@ -21,3 +26,5 @@ class EventoDB(EventoCreate, table=True):
     __tablename__ = "Eventos"  # type: ignore
 
     id: int | None = Field(default=None, primary_key=True)
+
+    comentarios: List["ComentarioEventoDB"] = Relationship(back_populates="evento")
