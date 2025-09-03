@@ -1,4 +1,6 @@
-from sqlmodel import Field, SQLModel
+from typing import Optional
+from sqlmodel import Field, SQLModel, Relationship
+from .usuario import UsuarioDB
 
 class LinkRedeBase(SQLModel):
     link: str
@@ -8,7 +10,7 @@ class LinkRedeBase(SQLModel):
 
 
 class LinkRedeCreate(LinkRedeBase):
-    nome: str
+    pass
 
 
 class LinkRedeResponse(LinkRedeBase):
@@ -16,6 +18,8 @@ class LinkRedeResponse(LinkRedeBase):
 
 
 class LinkRedeDB(LinkRedeCreate, table=True):
-    __tablename__ = "LinkRedes"  # type: ignore
+    __tablename__ = "link_redes"  # type: ignore
 
     id: int | None = Field(default=None, primary_key=True)
+
+    usuario: Optional["UsuarioDB"] = Relationship(back_populates="links")
