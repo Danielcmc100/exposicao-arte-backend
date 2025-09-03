@@ -7,7 +7,7 @@ from database import get_session
 from models.link_rede import LinkRedeCreate, LinkRedeDB, LinkRedeResponse
 from repositories.link_rede import (
     adicionar_link_rede,
-    atualizar_link_rede,
+    atualizar_link_rede_bd,
     buscar_link_rede_por_id,
     buscar_links_rede,
     remover_link_rede,
@@ -42,7 +42,7 @@ def atualizar_link_rede(
     link_rede_id: int, link_rede: LinkRedeCreate, session: SessionInjetada
 ) -> LinkRedeResponse | None:
     link_rede_db = LinkRedeDB.model_validate(link_rede)
-    link_rede_atualizado = atualizar_link_rede(link_rede_id, link_rede_db, session)
+    link_rede_atualizado = atualizar_link_rede_bd(link_rede_id, link_rede_db, session)
     return LinkRedeResponse.model_validate(link_rede_atualizado)
 
 
