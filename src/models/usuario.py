@@ -1,11 +1,17 @@
 from enum import Enum, auto
 from pydantic import EmailStr
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, SQLModel, Relationship
+from typing import List, Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .comentario_evento import ComentarioEventoDB
+
 
 class Funcao(Enum):
     CONSUMIDOR = auto()
     ARTISTA = auto()
     ADMIN = auto()
+
 
 class UsuarioBase(SQLModel):
     nome: str
@@ -25,4 +31,6 @@ class UsuarioResponse(UsuarioBase):
 class UsuarioDB(UsuarioCreate, table=True):
     __tablename__ = "usuarios"  # type: ignore
 
-    id: int = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
+
+    comentarios: List["ComentarioEventoDB"] = Relationship(back_populates="usuario")
