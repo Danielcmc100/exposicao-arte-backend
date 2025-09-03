@@ -1,6 +1,5 @@
 from typing import Optional
 from sqlmodel import Field, SQLModel, Relationship
-from .usuario import UsuarioDB
 
 class LinkRedeBase(SQLModel):
     link: str
