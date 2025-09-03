@@ -9,7 +9,7 @@ from models.evento import EventoCreate, EventoDB, EventoResponse
 
 from repositories.evento import (
     adicionar_evento,
-    atualizar_evento,
+    atualizar_evento_bd,
     buscar_evento_por_id,
     buscar_eventos,
     remover_evento,
@@ -43,7 +43,7 @@ def atualizar_evento(
     evento_id: int, evento: EventoCreate, session: SessionInjetada
 ) -> EventoResponse | None:
     evento_db = EventoDB.model_validate(evento)
-    evento_atualizado = atualizar_evento(evento_id, evento_db, session)
+    evento_atualizado = atualizar_evento_bd(evento_id, evento_db, session)
     return EventoResponse.model_validate(evento_atualizado)
 
 
