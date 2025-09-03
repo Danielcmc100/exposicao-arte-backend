@@ -38,7 +38,7 @@ def atualizar_categoria(
     categoria_id: int, categoria: CategoriaCreate, session: SessionInjetada
 ) -> CategoriaResponse | None:
     categoria_db = CategoriaDB.model_validate(categoria)
-    categoria_atualizada = atualizar_categoria(categoria_id, categoria_db, session)
+    categoria_atualizada = atualizar_categoria_bd(categoria_id, categoria_db, session)
     return CategoriaResponse.model_validate(categoria_atualizada)
 
 
