@@ -65,6 +65,8 @@ README.md                # Documentação do projeto
 
 ## Criando uma migração de banco de dados
 
+Obs: antes de executar os comandos, certifique-se de que o banco de dados está configurado corretamente no arquivo `.env`. e que o seu modelo foi importado no arquivo `src/models/__init__.py`.
+
 Para criar uma nova migração, use o comando:
 
 ```bash
