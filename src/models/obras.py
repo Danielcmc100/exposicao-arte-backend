@@ -7,7 +7,7 @@ from sqlmodel import Field, SQLModel, func
 class ObraBase(SQLModel):
     titulo: str
     autor: str
-    ano_producao: datetime
+    ano_producao: int
     tecnica_criacao: str
     altura_centimetros: float
     largura_centimetros: float
