@@ -1,5 +1,7 @@
-from sqlmodel import Field, SQLModel
 from datetime import datetime
+
+from sqlmodel import Field, SQLModel
+
 
 class EventoBase(SQLModel):
     endereco: str
@@ -18,6 +20,6 @@ class EventoResponse(EventoBase):
 
 
 class EventoDB(EventoCreate, table=True):
-    __tablename__ = "Eventos"  # type: ignore
+    __tablename__ = "eventos"  # type: ignore
 
     id: int | None = Field(default=None, primary_key=True)
