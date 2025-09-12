@@ -19,7 +19,7 @@ class ObraBase(SQLModel):
 
 
 class ObraDB(ObraBase, table=True):
-    __tablename__ = "obras"  # type: ignore
+    __tablename__ = "obra"  # type: ignore
     id: int = Field(default=None, primary_key=True)
     data_postagem: datetime = Field(default=func.now())
     id_artista: int
