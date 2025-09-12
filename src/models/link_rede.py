@@ -1,8 +1,9 @@
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 from sqlmodel import Field, Relationship, SQLModel
 
-from routers.usuario import UsuarioDB
+if TYPE_CHECKING:
+    from .usuario import UsuarioDB
 
 
 class LinkRedeBase(SQLModel):

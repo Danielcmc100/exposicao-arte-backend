@@ -1,10 +1,11 @@
 from enum import Enum, auto
-from typing import List
+from typing import TYPE_CHECKING, List
 
 from pydantic import EmailStr
 from sqlmodel import Field, Relationship, SQLModel
 
-from .link_rede import LinkRedeDB
+if TYPE_CHECKING:
+    from .link_rede import LinkRedeDB
 
 
 class Funcao(Enum):
