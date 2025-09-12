@@ -1,5 +1,9 @@
 from typing import Optional
-from sqlmodel import Field, SQLModel, Relationship
+
+from sqlmodel import Field, Relationship, SQLModel
+
+from routers.usuario import UsuarioDB
+
 
 class LinkRedeBase(SQLModel):
     link: str
