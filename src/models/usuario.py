@@ -1,13 +1,17 @@
 from enum import Enum, auto
+from typing import List
+
 from pydantic import EmailStr
-from sqlmodel import Field, SQLModel, Relationship
+from sqlmodel import Field, Relationship, SQLModel
+
 from .link_rede import LinkRedeDB
-from typing import List, Optional
+
 
 class Funcao(Enum):
     CONSUMIDOR = auto()
     ARTISTA = auto()
     ADMIN = auto()
+
 
 class UsuarioBase(SQLModel):
     nome: str
