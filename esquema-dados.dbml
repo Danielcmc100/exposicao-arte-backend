@@ -21,9 +21,8 @@ Table obras{
     id integer [primary key]
     titulo varchar
     body text [note: 'Content of the post']
-    user_id integer [not null]
     status varchar
-    created_at timestamp
+    data_postagem timestamp
     ano_producao timestamp
     id_categoria int
     tecnica_criacao varchar

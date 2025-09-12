@@ -1,10 +1,17 @@
+from enum import Enum, auto
 from pydantic import EmailStr
 from sqlmodel import Field, SQLModel
 
+class Funcao(Enum):
+    CONSUMIDOR = auto()
+    ARTISTA = auto()
+    ADMIN = auto()
 
 class UsuarioBase(SQLModel):
     nome: str
     email: EmailStr
+    funcao: Funcao
+    biografia: str
 
 
 class UsuarioCreate(UsuarioBase):
