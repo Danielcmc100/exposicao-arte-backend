@@ -1,6 +1,7 @@
-from sqlmodel import Field, SQLModel, Relationship
 from datetime import datetime
-from typing import List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, List
+
+from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
     from .comentario_evento import ComentarioEventoDB
@@ -23,7 +24,7 @@ class EventoResponse(EventoBase):
 
 
 class EventoDB(EventoCreate, table=True):
-    __tablename__ = "Eventos"  # type: ignore
+    __tablename__ = "eventos"  # type: ignore
 
     id: int | None = Field(default=None, primary_key=True)
 

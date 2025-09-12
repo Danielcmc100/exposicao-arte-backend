@@ -20,7 +20,7 @@ def adicionar_evento(evento: EventoDB, session: Session) -> EventoDB:
     return evento
 
 
-def atualizar_evento(evento_id: int, evento: EventoDB, session: Session) -> EventoDB | None:
+def atualizar_evento_bd(evento_id: int, evento: EventoDB, session: Session) -> EventoDB | None:
     evento_existente = session.get(EventoDB, evento_id)
     if not evento_existente:
         return None
@@ -33,16 +33,6 @@ def atualizar_evento(evento_id: int, evento: EventoDB, session: Session) -> Even
     session.commit()
     session.refresh(evento_existente)
     return evento_existente
-
-
-def remover_evento(evento_id: int, session: Session) -> EventoDB | None:
-    evento_existente = buscar_evento_por_id(evento_id, session)
-    if not evento_existente:
-        return None
-    session.delete(evento_existente)
-    session.commit()
-    return evento_existente
-
 
 
 def remover_evento(evento_id: int, session: Session) -> EventoDB | None:
