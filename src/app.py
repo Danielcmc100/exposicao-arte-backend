@@ -8,6 +8,7 @@ from routers.evento import rota as evento_rota
 from routers.link_rede import rota as link_rede_rota
 from routers.usuario import rota as usuario_rota
 from routers.comentario_obra import rota as comentario_obra_rota
+from routers.obra import rota as obra_rota
 
 
 @asynccontextmanager
@@ -29,3 +30,4 @@ app.include_router(link_rede_rota)
 app.include_router(categoria_rota)
 app.include_router(evento_rota)
 app.include_router(comentario_obra_rota)
+app.include_router(obra_rota)
