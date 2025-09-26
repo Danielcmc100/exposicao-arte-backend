@@ -22,4 +22,4 @@ class CategoriaDB(CategoriaCreate, table=True):
     __tablename__ = "categorias"  # type: ignore
 
     id: int = Field(default=None, primary_key=True)
-    # obras: list["ObraDB"] = Relationship()
+    # obras: list["ObraDB"] = Relationship() # TODO

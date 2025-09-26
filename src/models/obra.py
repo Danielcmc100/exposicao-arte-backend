@@ -5,7 +5,8 @@ from sqlalchemy import JSON
 from sqlmodel import Field, Relationship, SQLModel, func
 
 if TYPE_CHECKING:
-    from models import CategoriaDB
+    from .categoria import CategoriaDB
+    from .usuario import UsuarioDB
 
 
 class ObraBase(SQLModel):
@@ -18,15 +19,27 @@ class ObraBase(SQLModel):
     peso_quilos: float
     tags: list[str] = Field(sa_type=JSON)
     preco: float
-    preco: float
     status: bool
-
-
-class ObraDB(ObraBase, table=True):
-    __tablename__ = "obra"  # type: ignore
-    id: int = Field(default=None, primary_key=True)
     data_postagem: datetime = Field(default=func.now())
     id_artista: int
 
     id_categoria: int = Field(foreign_key="categorias.id")
-    categoria: "CategoriaDB" = Relationship()  # back_populates="obras"
+
+
+class ObraCreate(ObraBase):
+    pass
+
+
+class ObraResponse(ObraBase):
+    id: int
+
+
+class ObraDB(ObraCreate, table=True):
+    __tablename__ = "obras"  # type: ignore
+    id: int = Field(default=None, primary_key=True)
+
+    usuario_id: int = Field(foreign_key="usuarios.id", nullable=False)
+    usuario: "UsuarioDB" = Relationship(back_populates="obras")  # TODO
+
+    categoria_id: int = Field(foreign_key="categorias.id", nullable=False)
+    categoria: "CategoriaDB" = Relationship(back_populates="obras")  # TODO
