@@ -1,10 +1,10 @@
 from datetime import datetime
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
-    from .comentario_evento import ComentarioEventoDB
+    from models import ComentarioEventoDB, UsuarioDB
 
 
 class EventoBase(SQLModel):
@@ -28,4 +28,10 @@ class EventoDB(EventoCreate, table=True):
 
     id: int | None = Field(default=None, primary_key=True)
 
-    comentarios: List["ComentarioEventoDB"] = Relationship(back_populates="evento")
+    organizador: "UsuarioDB" = Relationship(
+        sa_relationship_kwargs={"foreign_keys": ("EventoDB.id_organizador")}
+    )
+    responsavel: "UsuarioDB" = Relationship(
+        sa_relationship_kwargs={"foreign_keys": ("EventoDB.id_responsavel")}
+    )
+    comentarios: list["ComentarioEventoDB"] = Relationship()

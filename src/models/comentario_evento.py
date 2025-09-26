@@ -4,8 +4,7 @@ from typing import TYPE_CHECKING, Optional
 from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
-    from .evento import EventoDB
-    from .usuario import UsuarioDB
+    from models import EventoDB, UsuarioDB
 
 
 class StatusComentario(Enum):
@@ -16,7 +15,7 @@ class StatusComentario(Enum):
 
 class ComentarioEventoBase(SQLModel):
     usuario_id: int = Field(foreign_key="usuarios.id")
-    evento_id: int = Field(foreign_key="Eventos.id")
+    evento_id: int = Field(foreign_key="eventos.id")
     comentario: str
     status: StatusComentario = StatusComentario.ATIVO
 
@@ -33,5 +32,5 @@ class ComentarioEventoDB(ComentarioEventoBase, table=True):
 
     id: Optional[int] = Field(default=None, primary_key=True)
 
-    usuario: "UsuarioDB" = Relationship(back_populates="comentarios")
+    usuario: "UsuarioDB" = Relationship(back_populates="comentarios_evento")
     evento: "EventoDB" = Relationship(back_populates="comentarios")

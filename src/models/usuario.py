@@ -1,12 +1,13 @@
 from enum import Enum, auto
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING
 
 from pydantic import EmailStr
 from sqlmodel import Field, Relationship, SQLModel
 
+from models import ComentarioEventoDB, LinkRedeDB
+
 if TYPE_CHECKING:
-    from .comentario_evento import ComentarioEventoDB
-    from .link_rede import LinkRedeDB
+    pass
 
 
 class Funcao(Enum):
@@ -35,6 +36,6 @@ class UsuarioDB(UsuarioCreate, table=True):
 
     id: int = Field(default=None, primary_key=True)
 
-    comentarios: List["ComentarioEventoDB"] = Relationship(back_populates="usuario")
+    comentarios_evento: list["ComentarioEventoDB"] = Relationship()
 
-    links: List["LinkRedeDB"] = Relationship(back_populates="usuario")
+    links: list["LinkRedeDB"] = Relationship()

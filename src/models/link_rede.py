@@ -1,9 +1,9 @@
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
-    from .usuario import UsuarioDB
+    from models import UsuarioDB
 
 
 class LinkRedeBase(SQLModel):
@@ -26,4 +26,4 @@ class LinkRedeDB(LinkRedeCreate, table=True):
 
     id: int | None = Field(default=None, primary_key=True)
 
-    usuario: Optional["UsuarioDB"] = Relationship(back_populates="links")
+    usuario: "UsuarioDB" = Relationship(back_populates="links")

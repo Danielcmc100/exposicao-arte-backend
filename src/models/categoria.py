@@ -1,4 +1,9 @@
+from typing import TYPE_CHECKING
+
 from sqlmodel import Field, SQLModel
+
+if TYPE_CHECKING:
+    pass
 
 
 class CategoriaBase(SQLModel):
@@ -16,4 +21,5 @@ class CategoriaResponse(CategoriaBase):
 class CategoriaDB(CategoriaCreate, table=True):
     __tablename__ = "categorias"  # type: ignore
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int = Field(default=None, primary_key=True)
+    # obras: list["ObraDB"] = Relationship()

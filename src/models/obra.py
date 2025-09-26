@@ -1,7 +1,11 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import JSON
-from sqlmodel import Field, SQLModel, func
+from sqlmodel import Field, Relationship, SQLModel, func
+
+if TYPE_CHECKING:
+    from models import CategoriaDB
 
 
 class ObraBase(SQLModel):
@@ -23,4 +27,6 @@ class ObraDB(ObraBase, table=True):
     id: int = Field(default=None, primary_key=True)
     data_postagem: datetime = Field(default=func.now())
     id_artista: int
-    id_categoria: int
+
+    id_categoria: int = Field(foreign_key="categorias.id")
+    categoria: "CategoriaDB" = Relationship()  # back_populates="obras"
