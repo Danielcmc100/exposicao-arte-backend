@@ -1,96 +1,92 @@
-Table users {
+table usuarios {
   id integer [primary key]
   nome varchar
   email varchar
   senha varchar
-  função varchar
+  funcao varchar
   biografia varchar
 }
 
-Table links_redes {
+table links_redes {
   id integer [primary key]
+  id_usuario integer [ref: > usuarios.id]
   link varchar
   nome_rede varchar
   nome_usuario varchar
-  id_usuario integer
 }
 
-Ref: users.id < links_redes.id_usuario
-
-Table obras{
+table obras{
     id integer [primary key]
+    id_categoria int [ref: > categorias.id]
+    id_artista int [ref: > usuarios.id]
     titulo varchar
-    body text [note: 'Content of the post']
+    body text
     status varchar
     data_postagem timestamp
     ano_producao timestamp
-    id_categoria int
     tecnica_criacao varchar
     altura float
     largura float
     comprimento float
     peso float
-    id_artista int
     preco float
-    tags list[varchar]
+    tags varchar
 }
 
-Ref: users.id < obras.id_artista
 
-Table eventos{
-  id int
+table eventos{
+  id int [primary key]
+  id_organizador int [ref: > usuarios.id]
+  id_responsavel int [ref: > usuarios.id]
   endereco varchar
   local varchar
   data datetime
-  id_organizador int
-  id_responsavel int
 }
 
-Ref: users.id < eventos.id_responsavel
-Ref: users.id < eventos.id_organizador
-
 table obra_evento{
-  id_obra int
-  id_evento int
+  id_obra int [ref: > obras.id]
+  id_evento int [ref: > eventos.id]
 }
 
 table usuario_evento{
-  id_obra int
-  id_evento int
+  id_usuario int [ref: > usuarios.id]
+  id_evento int [ref: > eventos.id]
 }
 
-Table comentario_obras{
-  id int
-  id_obra int
-  id_usuario int
+
+table comentario_obras{
+  id int [primary key]
+  id_obra int [ref: > obras.id]
+  id_usuario int [ref: > usuarios.id]
   ativado bool
 }
 
-Table comentario_eventos{
-  id int
-  id_evento int
-  id_usuario int
+table comentario_eventos{
+  id int [primary key]
+  id_evento int [ref: > eventos.id]
+  id_usuario int [ref: > usuarios.id]
+  texto varchar
   ativado bool
 }
 
-Table avaliacoes_obras{
-  id int
-  id_obra int
-  id_usuario int
+table avaliacoes_obras{
+  id int [primary key]
+  id_obra int [ref: > obras.id]
+  id_usuario int [ref: > usuarios.id]
   gostou bool
   avaliacao int
 }
 
-Table avaliacoes_eventos{
-  id int
-  id_evento int
-  id_usuario int
+table avaliacoes_eventos{
+  id int [primary key]
+  id_evento int [ref: > eventos.id]
+  id_usuario int [ref: > usuarios.id]
   gostou bool
   avaliacao int
 }
 
-Table categorias{
-  id int
-  id_obra int
+table categorias{
+  id int [primary key]
+  id_obra int [ref: > obras.id]
   nome varchar
 }
