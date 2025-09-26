@@ -1,8 +1,10 @@
 from typing import Annotated
+
 from fastapi import APIRouter, Depends
 from sqlmodel import Session
+
 from database import get_session
-from models.obra import ObraBase, ObraDB, ObraCreate, ObraResponse
+from models.obra import ObraCreate, ObraDB, ObraResponse
 from repositories.obra import (
     adicionar_obra,
     atualizar_obra_bd,
@@ -16,10 +18,12 @@ rota = APIRouter(prefix="/obras", tags=["obras"])
 
 SessionInjetada = Annotated[Session, Depends(get_session)]
 
+
 @rota.get("/")
 def obter_obras(session: SessionInjetada) -> list[ObraResponse]:
     obras_list = buscar_obras(session)
     return list(map(ObraResponse.model_validate, obras_list))
+
 
 @rota.get("/{obra_id}")
 def ler_obra(obra_id: int, session: SessionInjetada) -> ObraResponse | None:
@@ -43,9 +47,6 @@ def atualizar_obra(
 
 
 @rota.delete("/{obra_id}")
-def excluir_obra(
-    obra_id: int, session: SessionInjetada
-) -> ObraResponse | None:
+def excluir_obra(obra_id: int, session: SessionInjetada) -> ObraResponse | None:
     categoria_removida = remover_obra(obra_id, session)
     return ObraResponse.model_validate(categoria_removida)
-

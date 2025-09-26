@@ -4,11 +4,8 @@ from typing import TYPE_CHECKING
 from pydantic import EmailStr
 from sqlmodel import Field, Relationship, SQLModel
 
-from models import ComentarioEventoDB, LinkRedeDB
-
 if TYPE_CHECKING:
-    from .link_rede import LinkRedeDB
-    from .obra import ObraDB
+    from models import ComentarioEventoDB, LinkRedeDB, ObraDB
 
 
 class Funcao(Enum):

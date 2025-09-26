@@ -26,8 +26,7 @@ class ObraBase(SQLModel):
     id_categoria: int = Field(foreign_key="categorias.id")
 
 
-class ObraCreate(ObraBase):
-    pass
+class ObraCreate(ObraBase): ...
 
 
 class ObraResponse(ObraBase):
