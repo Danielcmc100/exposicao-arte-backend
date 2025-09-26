@@ -21,4 +21,4 @@ class CategoriaDB(CategoriaCreate, table=True):
 
     id: int | None = Field(default=None, primary_key=True)
 
-    obras: List["ObraDB"] = Relationship(back_populates="usuario")
+    obras: List["ObraDB"] = Relationship(back_populates="categoria")

@@ -7,6 +7,7 @@ from sqlmodel import Field, Relationship, SQLModel
 if TYPE_CHECKING:
     from .link_rede import LinkRedeDB
     from .obra import ObraDB
+    from .comentario_obra import ComentarioObraDB
 
 
 class Funcao(Enum):
@@ -37,3 +38,4 @@ class UsuarioDB(UsuarioCreate, table=True):
 
     links: List["LinkRedeDB"] = Relationship(back_populates="usuario")
     obras: List["ObraDB"] = Relationship(back_populates="usuario")
+    comentarios_obra: List["ComentarioObraDB"] = Relationship(back_populates="usuario")
