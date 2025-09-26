@@ -1,10 +1,11 @@
-from sqlmodel import Field, SQLModel, Relationship
 from enum import Enum, auto
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
+
+from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
-    from .usuario import UsuarioDB
     from .evento import EventoDB
+    from .usuario import UsuarioDB
 
 
 class StatusComentario(Enum):
@@ -20,8 +21,7 @@ class ComentarioEventoBase(SQLModel):
     status: StatusComentario = StatusComentario.ATIVO
 
 
-class ComentarioEventoCreate(ComentarioEventoBase):
-    pass
+class ComentarioEventoCreate(ComentarioEventoBase): ...
 
 
 class ComentarioEventoResponse(ComentarioEventoBase):

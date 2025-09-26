@@ -10,12 +10,12 @@ from models.comentario_evento import (
     ComentarioEventoResponse,
 )
 from repositories.comentario_evento import (
-    buscar_comentarios,
-    buscar_comentario_por_id,
-    buscar_comentarios_por_evento,
-    buscar_comentarios_por_usuario,
     adicionar_comentario,
     atualizar_comentario,
+    buscar_comentario_por_id,
+    buscar_comentarios,
+    buscar_comentarios_por_evento,
+    buscar_comentarios_por_usuario,
     remover_comentario,
 )
 
@@ -59,7 +59,9 @@ def criar_comentario(
     comentario: ComentarioEventoCreate, session: SessionInjetada
 ) -> ComentarioEventoResponse:
     comentario_db = ComentarioEventoDB.model_validate(comentario)
-    return ComentarioEventoResponse.model_validate(adicionar_comentario(comentario_db, session))
+    return ComentarioEventoResponse.model_validate(
+        adicionar_comentario(comentario_db, session)
+    )
 
 
 @rota.put("/{comentario_id}")

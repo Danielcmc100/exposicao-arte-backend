@@ -10,26 +10,34 @@ def buscar_comentarios(session: Session) -> Sequence[ComentarioEventoDB]:
     return session.exec(select(ComentarioEventoDB)).all()
 
 
-def buscar_comentario_por_id(comentario_id: int, session: Session) -> ComentarioEventoDB | None:
+def buscar_comentario_por_id(
+    comentario_id: int, session: Session
+) -> ComentarioEventoDB | None:
     """Busca um comentário pelo ID."""
     return session.get(ComentarioEventoDB, comentario_id)
 
 
-def buscar_comentarios_por_evento(evento_id: int, session: Session) -> Sequence[ComentarioEventoDB]:
+def buscar_comentarios_por_evento(
+    evento_id: int, session: Session
+) -> Sequence[ComentarioEventoDB]:
     """Retorna todos os comentários de um evento específico."""
     return session.exec(
         select(ComentarioEventoDB).where(ComentarioEventoDB.evento_id == evento_id)
     ).all()
 
 
-def buscar_comentarios_por_usuario(usuario_id: int, session: Session) -> Sequence[ComentarioEventoDB]:
+def buscar_comentarios_por_usuario(
+    usuario_id: int, session: Session
+) -> Sequence[ComentarioEventoDB]:
     """Retorna todos os comentários feitos por um usuário específico."""
     return session.exec(
         select(ComentarioEventoDB).where(ComentarioEventoDB.usuario_id == usuario_id)
     ).all()
 
 
-def adicionar_comentario(comentario: ComentarioEventoDB, session: Session) -> ComentarioEventoDB:
+def adicionar_comentario(
+    comentario: ComentarioEventoDB, session: Session
+) -> ComentarioEventoDB:
     """Adiciona um novo comentário."""
     session.add(comentario)
     session.commit()
@@ -52,7 +60,9 @@ def atualizar_comentario(
     return comentario_existente
 
 
-def remover_comentario(comentario_id: int, session: Session) -> ComentarioEventoDB | None:
+def remover_comentario(
+    comentario_id: int, session: Session
+) -> ComentarioEventoDB | None:
     """Remove um comentário."""
     comentario_existente = buscar_comentario_por_id(comentario_id, session)
     if not comentario_existente:
