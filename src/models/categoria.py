@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from sqlmodel import Field, SQLModel
 
 if TYPE_CHECKING:
-    pass
+    ...
 
 
 class CategoriaBase(SQLModel):

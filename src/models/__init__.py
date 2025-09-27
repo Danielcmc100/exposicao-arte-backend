@@ -1,5 +1,6 @@
 from .categoria import CategoriaDB
 from .comentario_evento import ComentarioEventoDB
+from .comentario_obra import ComentarioObraDB
 from .evento import EventoDB
 from .link_rede import LinkRedeDB
 from .obra import ObraDB
@@ -12,4 +13,5 @@ __all__ = [
     "CategoriaDB",
     "LinkRedeDB",
     "ComentarioEventoDB",
+    "ComentarioObraDB",
 ]

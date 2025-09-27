@@ -13,8 +13,7 @@ class LinkRedeBase(SQLModel):
     id_usuario: int = Field(foreign_key="usuarios.id")
 
 
-class LinkRedeCreate(LinkRedeBase):
-    pass
+class LinkRedeCreate(LinkRedeBase): ...
 
 
 class LinkRedeResponse(LinkRedeBase):

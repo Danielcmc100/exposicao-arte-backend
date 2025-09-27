@@ -5,7 +5,7 @@ from pydantic import EmailStr
 from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
-    from models import ComentarioEventoDB, LinkRedeDB, ObraDB
+    from models import ComentarioEventoDB, ComentarioObraDB, LinkRedeDB, ObraDB
 
 
 class Funcao(Enum):
@@ -38,3 +38,4 @@ class UsuarioDB(UsuarioCreate, table=True):
 
     links: list["LinkRedeDB"] = Relationship()
     obras: list["ObraDB"] = Relationship(back_populates="usuario")  # TODO
+    comentarios_obra: list["ComentarioObraDB"] = Relationship(back_populates="usuario")
