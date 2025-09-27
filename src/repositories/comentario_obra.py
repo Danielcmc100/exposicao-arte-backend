@@ -30,7 +30,10 @@ def atualizar_comentario_obra_bd(
     comentario_obra_existente = session.get(ComentarioObraDB, comentario_obra_id)
     if not comentario_obra_existente:
         return None
-    comentario_obra_existente.nome = comentario.nome
+
+    for fiend, value in comentario.model_dump().values():
+        setattr(comentario_obra_existente, fiend, value)
+
     session.commit()
     session.refresh(comentario_obra_existente)
     return comentario_obra_existente
