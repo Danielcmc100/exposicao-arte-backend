@@ -8,6 +8,7 @@ from sqlmodel import Field, SQLModel, func, Relationship
 if TYPE_CHECKING:
     from .usuario import UsuarioDB
     from .categoria import CategoriaDB
+    from .comentario_obra import ComentarioObraDB
 
 
 class ObraBase(SQLModel):
@@ -41,3 +42,7 @@ class ObraDB(ObraCreate, table=True):
 
     categoria_id: int = Field(foreign_key="categorias.id", nullable=False)
     categoria: "CategoriaDB" = Relationship(back_populates="obras")
+    
+    comentarios_obra: list["ComentarioObraDB"] = Relationship(back_populates="obra")
+
+    
