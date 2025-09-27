@@ -20,7 +20,9 @@ def adicionar_link_rede(link_rede: LinkRedeDB, session: Session) -> LinkRedeDB:
     return link_rede
 
 
-def atualizar_link_rede_bd(link_rede_id: int, link_rede: LinkRedeDB, session: Session) -> LinkRedeDB | None:
+def atualizar_link_rede_bd(
+    link_rede_id: int, link_rede: LinkRedeDB, session: Session
+) -> LinkRedeDB | None:
     link_rede_existente = session.get(LinkRedeDB, link_rede_id)
     if not link_rede_existente:
         return None

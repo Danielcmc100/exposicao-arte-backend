@@ -48,8 +48,6 @@ def atualizar_evento(
 
 
 @rota.delete("/{evento_id}")
-def excluir_evento(
-    evento_id: int, session: SessionInjetada
-) -> EventoResponse | None:
+def excluir_evento(evento_id: int, session: SessionInjetada) -> EventoResponse | None:
     evento_removido = remover_evento(evento_id, session)
     return EventoResponse.model_validate(evento_removido)

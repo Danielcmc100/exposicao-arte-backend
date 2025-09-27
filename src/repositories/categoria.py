@@ -29,6 +29,7 @@ def atualizar_categoria_bd(
     session.refresh(categoria_existente)
     return categoria_existente
 
+
 def remover_categoria(categoria_id: int, session: Session) -> CategoriaDB | None:
     categoria_existente = buscar_categoria_por_id(categoria_id, session)
     if not categoria_existente:
