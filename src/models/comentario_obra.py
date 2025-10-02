@@ -9,8 +9,6 @@ if TYPE_CHECKING:
 
 class ComentarioObraBase(SQLModel):
     ativado: bool = True
-    id_obra: int = Field(foreign_key="obra.id")
-    id_usuario: int = Field(foreign_key="usuarios.id")
 
 
 class ComentarioObraCreate(ComentarioObraBase): ...
@@ -26,7 +24,7 @@ class ComentarioObraDB(ComentarioObraCreate, table=True):
     id: int | None = Field(default=None, primary_key=True)
 
     usuario_id: int = Field(foreign_key="usuarios.id", nullable=False)
-    usuario: "UsuarioDB" = Relationship(back_populates="comentarios_obra")
+    usuario: "UsuarioDB" = Relationship()
 
     obra_id: int = Field(foreign_key="obras.id", nullable=False)
-    obra: "ObraDB" = Relationship(back_populates="comentarios_obra")
+    obra: "ObraDB" = Relationship()
