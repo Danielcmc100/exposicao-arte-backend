@@ -6,7 +6,12 @@ from models.usuario import UsuarioDB
 
 
 def buscar_usuarios(session: Session) -> Sequence[UsuarioDB]:
-    return session.exec(select(UsuarioDB)).all()
+    usuarios = session.exec(select(UsuarioDB)).all()
+    print([usuario.comentarios_evento for usuario in usuarios])
+    print([usuario.links for usuario in usuarios])
+    print([usuario.obras for usuario in usuarios])
+    print([usuario.comentarios_obra for usuario in usuarios])
+    return usuarios
 
 
 def buscar_usuario_por_id(usuario_id: int, session: Session) -> UsuarioDB | None:

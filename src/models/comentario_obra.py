@@ -8,23 +8,22 @@ if TYPE_CHECKING:
 
 
 class ComentarioObraBase(SQLModel):
+    texto: str
     ativado: bool = True
+
+    usuario_id: int = Field(foreign_key="usuarios.id", nullable=False)
+    obra_id: int = Field(foreign_key="obras.id", nullable=False)
 
 
 class ComentarioObraCreate(ComentarioObraBase): ...
 
 
 class ComentarioObraResponse(ComentarioObraBase):
-    id: int
+    id: int = Field(default=None, primary_key=True)
 
 
-class ComentarioObraDB(ComentarioObraCreate, table=True):
+class ComentarioObraDB(ComentarioObraResponse, table=True):
     __tablename__ = "comentario_obras"  # type: ignore
 
-    id: int | None = Field(default=None, primary_key=True)
-
-    usuario_id: int = Field(foreign_key="usuarios.id", nullable=False)
     usuario: "UsuarioDB" = Relationship()
-
-    obra_id: int = Field(foreign_key="obras.id", nullable=False)
     obra: "ObraDB" = Relationship()

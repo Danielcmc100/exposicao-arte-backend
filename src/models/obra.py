@@ -22,30 +22,29 @@ class ObraBase(SQLModel):
     preco: float
     status: bool
     data_postagem: datetime = Field(default=func.now())
-    id_artista: int
+
+    usuario_id: int = Field(foreign_key="usuarios.id", nullable=False)
+    categoria_id: int = Field(foreign_key="categorias.id", nullable=False)
 
 
 class ObraCreate(ObraBase): ...
 
 
 class ObraResponse(ObraBase):
-    id: int
-
-
-class ObraDB(ObraCreate, table=True):
-    __tablename__ = "obras"  # type: ignore
     id: int = Field(default=None, primary_key=True)
 
-    usuario_id: int = Field(foreign_key="usuarios.id", nullable=False)
+
+class ObraDB(ObraResponse, table=True):
+    __tablename__ = "obras"  # type: ignore
+
     usuario: "UsuarioDB" = Relationship(
         back_populates="obras",
         sa_relationship_kwargs={"foreign_keys": ("ObraDB.usuario_id")},
-    )  # TODO
+    )
 
-    categoria_id: int = Field(foreign_key="categorias.id", nullable=False)
     categoria: "CategoriaDB" = Relationship(
         back_populates="obras",
         sa_relationship_kwargs={"foreign_keys": ("ObraDB.categoria_id")},
-    )  # TODO
+    )
 
     comentarios_obra: list["ComentarioObraDB"] = Relationship(back_populates="obra")

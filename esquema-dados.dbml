@@ -58,6 +58,7 @@ table comentario_obras{
   id int [primary key]
   id_obra int [ref: > obras.id]
   id_usuario int [ref: > usuarios.id]
+  texto varchar
   ativado bool
 }
 
