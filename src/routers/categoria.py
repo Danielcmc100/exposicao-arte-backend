@@ -16,19 +16,25 @@ rota = APIRouter(prefix="/categorias", tags=["categorias"])
 
 SessionInjetada = Annotated[Session, Depends(get_session)]
 
+
 @rota.get("/")
 def obter_categorias(session: SessionInjetada) -> list[CategoriaResponse]:
     categorias_list = buscar_categorias(session)
     return list(map(CategoriaResponse.model_validate, categorias_list))
 
+
 @rota.get("/{categoria_id}")
-def ler_categoria(categoria_id: int, session: SessionInjetada) -> CategoriaResponse | None:
+def ler_categoria(
+    categoria_id: int, session: SessionInjetada
+) -> CategoriaResponse | None:
     categoria = buscar_categoria_por_id(categoria_id, session)
     return CategoriaResponse.model_validate(categoria) if categoria else None
 
 
 @rota.post("/")
-def criar_categoria(categoria: CategoriaCreate, session: SessionInjetada) -> CategoriaResponse:
+def criar_categoria(
+    categoria: CategoriaCreate, session: SessionInjetada
+) -> CategoriaResponse:
     categoria_db = CategoriaDB.model_validate(categoria)
     return CategoriaResponse.model_validate(adicionar_categoria(categoria_db, session))
 
@@ -48,4 +54,3 @@ def excluir_categoria(
 ) -> CategoriaResponse | None:
     categoria_removida = remover_categoria(categoria_id, session)
     return CategoriaResponse.model_validate(categoria_removida)
-

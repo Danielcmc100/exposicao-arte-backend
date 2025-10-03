@@ -4,11 +4,12 @@ from fastapi import FastAPI
 
 from database import init_db
 from routers.categoria import rota as categoria_rota
+from routers.comentario_evento import rota as comentario_evento_rota
+from routers.comentario_obra import rota as comentario_obra_rota
 from routers.evento import rota as evento_rota
 from routers.link_rede import rota as link_rede_rota
-from routers.usuario import rota as usuario_rota
-from routers.comentario_obra import rota as comentario_obra_rota
 from routers.obra import rota as obra_rota
+from routers.usuario import rota as usuario_rota
 
 
 @asynccontextmanager
@@ -29,5 +30,6 @@ app.include_router(usuario_rota)
 app.include_router(link_rede_rota)
 app.include_router(categoria_rota)
 app.include_router(evento_rota)
+app.include_router(comentario_evento_rota)
 app.include_router(comentario_obra_rota)
 app.include_router(obra_rota)

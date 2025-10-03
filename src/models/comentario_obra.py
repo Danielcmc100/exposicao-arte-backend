@@ -1,32 +1,29 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING
 
-from sqlmodel import Field, SQLModel, Relationship
+from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
-    from .usuario import UsuarioDB
     from .obra import ObraDB
+    from .usuario import UsuarioDB
+
 
 class ComentarioObraBase(SQLModel):
+    texto: str
     ativado: bool = True
-    id_obra: int = Field(foreign_key="obra.id")
-    id_usuario: int = Field(foreign_key="usuarios.id")
+
+    usuario_id: int = Field(foreign_key="usuarios.id", nullable=False)
+    obra_id: int = Field(foreign_key="obras.id", nullable=False)
 
 
-class ComentarioObraCreate(ComentarioObraBase):
-    pass
+class ComentarioObraCreate(ComentarioObraBase): ...
 
 
 class ComentarioObraResponse(ComentarioObraBase):
-    id: int
+    id: int = Field(default=None, primary_key=True)
 
 
-class ComentarioObraDB(ComentarioObraCreate, table=True):
+class ComentarioObraDB(ComentarioObraResponse, table=True):
     __tablename__ = "comentario_obras"  # type: ignore
 
-    id: int | None = Field(default=None, primary_key=True)
-
-    usuario_id: int = Field(foreign_key="usuarios.id", nullable=False)
-    usuario: "UsuarioDB" = Relationship(back_populates="comentarios_obra")
-
-    obra_id: int = Field(foreign_key="obras.id", nullable=False)
-    obra: "ObraDB" = Relationship(back_populates="comentarios_obra")
+    usuario: "UsuarioDB" = Relationship()
+    obra: "ObraDB" = Relationship()

@@ -1,8 +1,17 @@
 from .categoria import CategoriaDB
+from .comentario_evento import ComentarioEventoDB
+from .comentario_obra import ComentarioObraDB
 from .evento import EventoDB
 from .link_rede import LinkRedeDB
 from .obra import ObraDB
 from .usuario import UsuarioDB
-from .comentario_obra import ComentarioObraDB
 
-__all__ = ["UsuarioDB", "ObraDB", "EventoDB", "CategoriaDB", "LinkRedeDB", "ComentarioObraDB"]
+__all__ = [
+    "UsuarioDB",
+    "ObraDB",
+    "EventoDB",
+    "CategoriaDB",
+    "LinkRedeDB",
+    "ComentarioEventoDB",
+    "ComentarioObraDB",
+]

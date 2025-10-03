@@ -26,13 +26,17 @@ def obter_links_rede(session: SessionInjetada) -> list[LinkRedeResponse]:
 
 
 @rota.get("/{link_rede_id}")
-def ler_link_rede(link_rede_id: int, session: SessionInjetada) -> LinkRedeResponse | None:
+def ler_link_rede(
+    link_rede_id: int, session: SessionInjetada
+) -> LinkRedeResponse | None:
     link_rede = buscar_link_rede_por_id(link_rede_id, session)
     return LinkRedeResponse.model_validate(link_rede) if link_rede else None
 
 
 @rota.post("/")
-def criar_link_rede(link_rede: LinkRedeCreate, session: SessionInjetada) -> LinkRedeResponse:
+def criar_link_rede(
+    link_rede: LinkRedeCreate, session: SessionInjetada
+) -> LinkRedeResponse:
     link_rede_db = LinkRedeDB.model_validate(link_rede)
     return LinkRedeResponse.model_validate(adicionar_link_rede(link_rede_db, session))
 

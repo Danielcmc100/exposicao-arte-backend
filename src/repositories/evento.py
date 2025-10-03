@@ -20,7 +20,9 @@ def adicionar_evento(evento: EventoDB, session: Session) -> EventoDB:
     return evento
 
 
-def atualizar_evento_bd(evento_id: int, evento: EventoDB, session: Session) -> EventoDB | None:
+def atualizar_evento_bd(
+    evento_id: int, evento: EventoDB, session: Session
+) -> EventoDB | None:
     evento_existente = session.get(EventoDB, evento_id)
     if not evento_existente:
         return None
