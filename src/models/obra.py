@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING
 from sqlalchemy import JSON
 from sqlmodel import Field, Relationship, SQLModel, func
 
+from models import ObraEventoDB
+
 if TYPE_CHECKING:
-    from .categoria import CategoriaDB
-    from .comentario_obra import ComentarioObraDB
-    from .usuario import UsuarioDB
+    from models import CategoriaDB, ComentarioObraDB, EventoDB, UsuarioDB
 
 
 class ObraBase(SQLModel):
@@ -48,3 +48,6 @@ class ObraDB(ObraResponse, table=True):
     )
 
     comentarios_obra: list["ComentarioObraDB"] = Relationship(back_populates="obra")
+    eventos: list["EventoDB"] = Relationship(
+        back_populates="obras", link_model=ObraEventoDB
+    )

@@ -6,7 +6,9 @@ from models.obra import ObraDB
 
 
 def buscar_obras(session: Session) -> Sequence[ObraDB]:
-    return session.exec(select(ObraDB)).all()
+    obras = session.exec(select(ObraDB)).all()
+    print([a.eventos for a in obras])
+    return obras
 
 
 def buscar_obra_por_id(obra_id: int, session: Session) -> ObraDB | None:

@@ -3,8 +3,10 @@ from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
 
+from models import ObraEventoDB
+
 if TYPE_CHECKING:
-    from models import ComentarioEventoDB, UsuarioDB
+    from models import ComentarioEventoDB, ObraDB, UsuarioDB
 
 
 class EventoBase(SQLModel):
@@ -26,7 +28,7 @@ class EventoResponse(EventoBase):
 class EventoDB(EventoCreate, table=True):
     __tablename__ = "eventos"  # type: ignore
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int = Field(default=None, primary_key=True)
 
     organizador: "UsuarioDB" = Relationship(
         sa_relationship_kwargs={"foreign_keys": ("EventoDB.id_organizador")}
@@ -35,3 +37,6 @@ class EventoDB(EventoCreate, table=True):
         sa_relationship_kwargs={"foreign_keys": ("EventoDB.id_responsavel")}
     )
     comentarios: list["ComentarioEventoDB"] = Relationship()
+    obras: list["ObraDB"] = Relationship(
+        back_populates="eventos", link_model=ObraEventoDB
+    )
