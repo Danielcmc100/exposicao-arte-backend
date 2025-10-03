@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from sqlalchemy import JSON
 from sqlmodel import Field, Relationship, SQLModel, func
 
-from models import ObraEventoDB
+from models.obra_evento import ObraEventoDB
 
 if TYPE_CHECKING:
     from models import CategoriaDB, ComentarioObraDB, EventoDB, UsuarioDB
