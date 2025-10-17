@@ -2,7 +2,7 @@ from typing import Sequence
 
 from sqlmodel import Session, select
 
-from models.evento import EventoDB
+from .evento import EventoDB
 
 
 def buscar_eventos(session: Session) -> Sequence[EventoDB]:

@@ -3,6 +3,8 @@ from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
 
+from .avaliacoes_eventos import AvaliacaoEventoDB
+
 if TYPE_CHECKING:
     from models import ComentarioEventoDB, UsuarioDB
 
@@ -35,3 +37,5 @@ class EventoDB(EventoCreate, table=True):
         sa_relationship_kwargs={"foreign_keys": ("EventoDB.id_responsavel")}
     )
     comentarios: list["ComentarioEventoDB"] = Relationship()
+    avaliacoes_eventos: list["AvaliacaoEventoDB"] = Relationship(back_populates="evento")
+
