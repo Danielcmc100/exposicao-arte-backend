@@ -4,6 +4,8 @@ from typing import TYPE_CHECKING
 from pydantic import EmailStr
 from sqlmodel import Field, Relationship, SQLModel
 
+from models.avaliacoes_eventos import AvaliacaoEventoDB
+
 if TYPE_CHECKING:
     from models import ComentarioEventoDB, ComentarioObraDB, LinkRedeDB, ObraDB
 
@@ -39,3 +41,4 @@ class UsuarioDB(UsuarioCreate, table=True):
     links: list["LinkRedeDB"] = Relationship()
     obras: list["ObraDB"] = Relationship(back_populates="usuario")  # TODO
     comentarios_obra: list["ComentarioObraDB"] = Relationship(back_populates="usuario")
+    avaliacoes_eventos: list["AvaliacaoEventoDB"] = Relationship(back_populates="usuario")
