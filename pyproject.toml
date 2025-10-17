@@ -14,3 +14,6 @@ dependencies = [
 
 [tool.pyright]
 ignore = ["migrations"]
+
+[dependency-groups]
+dev = ["schemathesis>=4.2.1"]
