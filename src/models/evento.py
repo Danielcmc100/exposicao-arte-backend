@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
 
-from models.avaliacoes_eventos import AvaliacaoEventoDB
+from .avaliacoes_eventos import AvaliacaoEventoDB
 
 if TYPE_CHECKING:
     from models import ComentarioEventoDB, UsuarioDB
