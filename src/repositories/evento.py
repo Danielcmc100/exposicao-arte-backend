@@ -3,6 +3,7 @@ from typing import Sequence
 from sqlmodel import Session, select
 
 from models.evento import EventoDB
+from models.obra import ObraDB
 
 
 def buscar_eventos(session: Session) -> Sequence[EventoDB]:
@@ -44,3 +45,11 @@ def remover_evento(evento_id: int, session: Session) -> EventoDB | None:
     session.delete(evento_existente)
     session.commit()
     return evento_existente
+
+
+def buscar_eventos_por_obra(obra_id: int, session: Session) -> Sequence[EventoDB]:
+    obra_existente = session.get(ObraDB, obra_id)
+    if not obra_existente:
+        return []
+
+    return obra_existente.eventos
