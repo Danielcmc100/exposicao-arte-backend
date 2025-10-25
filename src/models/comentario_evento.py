@@ -1,5 +1,5 @@
 from enum import Enum, auto
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
 
@@ -30,7 +30,7 @@ class ComentarioEventoResponse(ComentarioEventoBase):
 class ComentarioEventoDB(ComentarioEventoBase, table=True):
     __tablename__ = "comentario_eventos"  # type: ignore
 
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
 
     usuario: "UsuarioDB" = Relationship(back_populates="comentarios_evento")
     evento: "EventoDB" = Relationship(back_populates="comentarios")

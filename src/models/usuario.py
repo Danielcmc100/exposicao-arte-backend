@@ -5,7 +5,13 @@ from pydantic import EmailStr
 from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
-    from models import ComentarioEventoDB, ComentarioObraDB, LinkRedeDB, ObraDB, AvaliacaoEventoDB
+    from models import (
+        AvaliacaoEventoDB,
+        ComentarioEventoDB,
+        ComentarioObraDB,
+        LinkRedeDB,
+        ObraDB,
+    )
 
 
 class Funcao(Enum):

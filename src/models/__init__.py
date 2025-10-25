@@ -9,13 +9,13 @@ from .obra_evento import ObraEventoDB
 from .usuario import UsuarioDB
 
 __all__ = [
-    "UsuarioDB",
-    "ObraDB",
-    "EventoDB",
+    "AvaliacaoEventoDB",
     "CategoriaDB",
-    "LinkRedeDB",
     "ComentarioEventoDB",
     "ComentarioObraDB",
+    "EventoDB",
+    "LinkRedeDB",
+    "ObraDB",
     "ObraEventoDB",
-    "AvaliacaoEventoDB",
+    "UsuarioDB",
 ]

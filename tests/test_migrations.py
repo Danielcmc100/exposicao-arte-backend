@@ -88,7 +88,7 @@ class TestMigrations:
         """Testa o ciclo completo de upgrade e downgrade."""
         # Configure Alembic to use the provided engine's connection
         alembic_config.attributes["connection"] = engine
-        
+
         print(f"🔧 Usando engine existente: {engine.url}")
 
         # Verificar a versão atual antes do upgrade
@@ -154,8 +154,7 @@ class TestMigrations:
     def test_migration_consistency(
         self, sqlite_engine: Engine, postgres_engine: Engine, alembic_config: Config
     ) -> None:
-        """
-        Testa se as migrações produzem esquemas consistentes
+        """Testa se as migrações produzem esquemas consistentes
         entre SQLite e PostgreSQL.
         """
         # Aplicar migrações em ambos usando connections
@@ -163,7 +162,7 @@ class TestMigrations:
         script_location = alembic_config.get_main_option("script_location")
         if script_location:
             sqlite_config.set_main_option("script_location", script_location)
-        
+
         with sqlite_engine.begin() as connection:
             sqlite_config.attributes["connection"] = connection
             command.upgrade(sqlite_config, "head")
@@ -171,7 +170,7 @@ class TestMigrations:
         postgres_config = Config(alembic_config.config_file_name)
         if script_location:
             postgres_config.set_main_option("script_location", script_location)
-        
+
         with postgres_engine.begin() as connection:
             postgres_config.attributes["connection"] = connection
             command.upgrade(postgres_config, "head")

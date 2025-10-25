@@ -1,5 +1,7 @@
-from typing import Sequence
+from collections.abc import Sequence
+
 from sqlmodel import Session, select
+
 from models.categoria import CategoriaDB
 
 

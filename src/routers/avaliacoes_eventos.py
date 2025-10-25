@@ -9,8 +9,6 @@ from models.avaliacoes_eventos import (
     AvaliacaoEventoDB,
     AvaliacaoEventoResponse,
 )
-
-from models.comentario_evento import ComentarioEventoResponse
 from repositories.avaliacoes_eventos import (
     adicionar_avaliacao,
     atualizar_avaliacao,

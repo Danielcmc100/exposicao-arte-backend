@@ -1,6 +1,8 @@
 from typing import Annotated
+
 from fastapi import APIRouter, Depends
 from sqlmodel import Session
+
 from database import get_session
 from models.categoria import CategoriaCreate, CategoriaDB, CategoriaResponse
 from repositories.categoria import (

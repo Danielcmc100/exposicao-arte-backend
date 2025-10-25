@@ -5,7 +5,10 @@ from sqlmodel import Session
 
 from database import get_session
 from models import ObraEventoDB
-from repositories.obra_evento import adicionar_obra_ao_evento, remover_obra_do_evento
+from repositories.obra_evento import (
+    adicionar_obra_ao_evento,
+    remover_obra_do_evento,
+)
 
 rota = APIRouter(prefix="/obras-evento", tags=["obras eventos"])
 

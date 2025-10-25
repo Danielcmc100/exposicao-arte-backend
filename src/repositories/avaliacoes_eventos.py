@@ -1,18 +1,21 @@
-from typing import Sequence
+from collections.abc import Sequence
 
 from sqlmodel import Session, select
 
 from models.avaliacoes_eventos import AvaliacaoEventoDB
 
+
 def buscar_avaliacoes(session: Session) -> Sequence[AvaliacaoEventoDB]:
     """Retorna todas as avaliações."""
     return session.exec(select(AvaliacaoEventoDB)).all()
+
 
 def buscar_avaliacao_por_id(
     avaliacao_id: int, session: Session
 ) -> AvaliacaoEventoDB | None:
     """Busca uma avaliação pelo ID."""
     return session.get(AvaliacaoEventoDB, avaliacao_id)
+
 
 def buscar_avaliacoes_por_evento(
     evento_id: int, session: Session
@@ -22,6 +25,7 @@ def buscar_avaliacoes_por_evento(
         select(AvaliacaoEventoDB).where(AvaliacaoEventoDB.evento_id == evento_id)
     ).all()
 
+
 def buscar_avaliacoes_por_usuario(
     usuario_id: int, session: Session
 ) -> Sequence[AvaliacaoEventoDB]:
@@ -29,6 +33,7 @@ def buscar_avaliacoes_por_usuario(
     return session.exec(
         select(AvaliacaoEventoDB).where(AvaliacaoEventoDB.usuario_id == usuario_id)
     ).all()
+
 
 def adicionar_avaliacao(
     avaliacao: AvaliacaoEventoDB, session: Session
@@ -38,6 +43,7 @@ def adicionar_avaliacao(
     session.commit()
     session.refresh(avaliacao)
     return avaliacao
+
 
 def atualizar_avaliacao(
     avaliacao_id: int, avaliacao: AvaliacaoEventoDB, session: Session
@@ -52,6 +58,7 @@ def atualizar_avaliacao(
     session.commit()
     session.refresh(avaliacao_existente)
     return avaliacao_existente
+
 
 def remover_avaliacao(
     avaliacao_id: int, session: Session

@@ -6,11 +6,13 @@ if TYPE_CHECKING:
     from .evento import EventoDB
     from .usuario import UsuarioDB
 
+
 class AvaliacaoEventoBase(SQLModel):
     usuario_id: int = Field(foreign_key="usuarios.id")
     evento_id: int = Field(foreign_key="eventos.id")
     gostou: str
     avaliacao: int
+
 
 class AvaliacaoEventoCreate(AvaliacaoEventoBase): ...
 

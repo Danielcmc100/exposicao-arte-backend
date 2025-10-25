@@ -1,4 +1,5 @@
-from typing import Any, Generator
+from collections.abc import Generator
+from typing import Any
 
 from sqlmodel import SQLModel, create_engine
 from sqlmodel.orm.session import Session
