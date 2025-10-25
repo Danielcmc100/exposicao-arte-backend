@@ -19,6 +19,7 @@
 - **Args** deve ser utilizado o menos possível (preferir type hints)
 - **Raises** só deve ser utilizado quando a função explicitamente lança uma exceção com `raise`
 - **Returns** devem ser documentados, exceto quando a função retorna `None`
+- **IMPORTANTE**: Docstring deve SEMPRE vir imediatamente APÓS a linha com o fechamento dos parâmetros `)` e o tipo de retorno `:`. A docstring deve ser a PRIMEIRA linha dentro do corpo da função, nunca entre a assinatura `def` e os parâmetros
 - Priorize descrições claras e concisas sobre seções desnecessárias
 
 ## Formatação (Ruff)
