@@ -1,7 +1,7 @@
 from logging.config import fileConfig
 
 from alembic import context
-from sqlalchemy import engine_from_config, pool
+from sqlalchemy import Connection, Engine, engine_from_config, pool
 from sqlmodel import SQLModel
 
 from src.config import settings
@@ -76,7 +76,7 @@ def run_migrations_online() -> None:
         )
 
     # Check if connectable is an Engine or Connection
-    if hasattr(connectable, 'begin'):
+    if isinstance(connectable, Connection):
         # It's a Connection object, use it directly
         context.configure(
             connection=connectable, 
