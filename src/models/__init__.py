@@ -1,3 +1,5 @@
+"""Módulo de modelos de banco de dados."""
+
 from .avaliacoes_eventos import AvaliacaoEventoDB
 from .categoria import CategoriaDB
 from .comentario_evento import ComentarioEventoDB

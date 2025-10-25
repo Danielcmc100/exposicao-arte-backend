@@ -5,11 +5,12 @@ from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
 
-from .avaliacoes_eventos import AvaliacaoEventoDB
 from .obra_evento import ObraEventoDB
 
 if TYPE_CHECKING:
     from models import ComentarioEventoDB, ObraDB, UsuarioDB
+
+    from .avaliacoes_eventos import AvaliacaoEventoDB
 
 
 class EventoBase(SQLModel):
