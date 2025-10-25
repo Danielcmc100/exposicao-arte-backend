@@ -6,7 +6,9 @@ from collections.abc import Generator
 from pathlib import Path
 
 import pytest
+from alembic import command
 from alembic.config import Config
+from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
 from testcontainers.postgres import PostgresContainer
@@ -115,3 +117,70 @@ def postgres_engine(
         connection.execute(text("CREATE SCHEMA public"))
 
     engine.dispose()
+
+
+@pytest.fixture
+def app_with_db(
+    postgres_container: PostgresContainer,
+    alembic_config: Config,
+) -> Generator[TestClient, None, None]:
+    """Cria uma aplicação FastAPI com banco PostgreSQL testcontainer.
+
+    Esta fixture:
+    1. Cria um container PostgreSQL
+    2. Executa as migrations do Alembic
+    3. Configura a aplicação para usar o banco de teste
+    4. Retorna um TestClient pronto para testes
+
+    Args:
+        postgres_container: Container PostgreSQL do testcontainers
+        alembic_config: Configuração do Alembic
+
+    Yields:
+        TestClient: Cliente de teste da aplicação FastAPI
+
+    """
+    import os  # noqa: PLC0415
+    import sys  # noqa: PLC0415
+    from pathlib import Path  # noqa: PLC0415
+
+    # Adicionar src ao path para resolver imports
+    src_path = Path(__file__).parent.parent / "src"
+    sys.path.insert(0, str(src_path))
+
+    # Obter URL de conexão do container
+    db_url = postgres_container.get_connection_url()
+
+    # Configurar variável de ambiente antes de importar a aplicação
+    os.environ["DATABASE_URL"] = db_url
+
+    # Limpar módulos já importados do src para evitar conflito de metadata
+    modules_to_remove = [
+        key
+        for key in sys.modules
+        if key.startswith(("config", "database", "models", "routers", "app"))
+    ]
+    for module in modules_to_remove:
+        del sys.modules[module]
+
+    # Limpar o metadata do SQLModel para evitar conflitos
+    from sqlmodel import SQLModel  # noqa: PLC0415
+
+    SQLModel.metadata.clear()
+
+    # Executar migrations
+    alembic_config.set_main_option("sqlalchemy.url", db_url)
+    command.upgrade(alembic_config, "head")
+
+    # Importar a aplicação após configurar o banco e limpar imports
+    from app import app  # noqa: PLC0415
+
+    # Criar cliente de teste
+    client = TestClient(app)
+
+    yield client
+
+    # Cleanup
+    sys.path.remove(str(src_path))
+    if "DATABASE_URL" in os.environ:
+        del os.environ["DATABASE_URL"]
