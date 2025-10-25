@@ -1,3 +1,5 @@
+"""Modelos de dados para links de redes sociais."""
+
 from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel

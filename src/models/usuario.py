@@ -1,3 +1,5 @@
+"""Modelos de dados para usuários do sistema."""
+
 from enum import Enum, auto
 from typing import TYPE_CHECKING
 

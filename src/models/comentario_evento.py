@@ -1,3 +1,5 @@
+"""Modelos de dados para comentários em eventos."""
+
 from enum import Enum, auto
 from typing import TYPE_CHECKING
 

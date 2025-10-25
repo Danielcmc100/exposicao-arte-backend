@@ -1,3 +1,5 @@
+"""Modelos de dados para associação entre obras e eventos."""
+
 from sqlmodel import Field, SQLModel
 
 
