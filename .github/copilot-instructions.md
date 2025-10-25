@@ -1,5 +1,23 @@
 # Instruções para o GitHub Copilot
 
+## Tecnologias do Projeto
+
+### Stack Principal
+- **Python 3.12+** - Linguagem base
+- **FastAPI 0.116+** - Framework web assíncrono
+- **SQLModel 0.0.24** - ORM (SQLAlchemy + Pydantic)
+- **PostgreSQL** - Banco de dados
+- **Alembic 1.16+** - Migrações de banco
+- **Pydantic Settings 2.10+** - Gerenciamento de configurações
+
+### Ferramentas de Desenvolvimento
+- **uv** - Gerenciador de pacotes Python
+- **Ruff** - Linter e formatador
+- **Pyright 1.1+** - Type checker
+- **Pytest 8.3+** - Framework de testes
+- **Testcontainers 4.8+** - Testes com containers
+- **Schemathesis 4.2+** - Testes de API baseados em propriedades
+
 ## Idioma
 - **SEMPRE escreva documentações, comentários e docstrings em PORTUGUÊS**
 - Nomes de variáveis, funções e classes devem estar em inglês
