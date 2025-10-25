@@ -5,6 +5,7 @@ from .evento import EventoDB
 from .link_rede import LinkRedeDB
 from .obra import ObraDB
 from .usuario import UsuarioDB
+from .avaliacoes_eventos import AvaliacaoEventoDB
 
 __all__ = [
     "UsuarioDB",
@@ -14,4 +15,5 @@ __all__ = [
     "LinkRedeDB",
     "ComentarioEventoDB",
     "ComentarioObraDB",
+    "AvaliacaoEventoDB",
 ]

@@ -5,7 +5,7 @@ from sqlmodel import Session
 
 from database import get_session
 
-from models.evento import EventoCreate, EventoDB, EventoResponse
+from .evento import EventoCreate, EventoDB, EventoResponse
 
 from repositories.evento import (
     adicionar_evento,
