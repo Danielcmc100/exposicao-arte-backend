@@ -43,7 +43,7 @@ class UsuarioDB(UsuarioCreate, table=True):
     comentarios_evento: list["ComentarioEventoDB"] = Relationship()
 
     links: list["LinkRedeDB"] = Relationship()
-    obras: list["ObraDB"] = Relationship(back_populates="usuario")  # TODO
+    obras: list["ObraDB"] = Relationship(back_populates="usuario")
     comentarios_obra: list["ComentarioObraDB"] = Relationship(
         back_populates="usuario"
     )
