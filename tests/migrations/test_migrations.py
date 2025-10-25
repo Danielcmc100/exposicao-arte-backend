@@ -9,7 +9,7 @@ from sqlalchemy.engine import Engine
 
 
 def _run_migrations(
-    self, engine: Engine, alembic_config: Config, revision: str = "head"
+     engine: Engine, alembic_config: Config, revision: str = "head"
 ) -> None:
     """Executa as migrações do Alembic em um engine específico."""
     # Configurar a URL do banco no alembic config
@@ -18,7 +18,7 @@ def _run_migrations(
     # Executar upgrade
     command.upgrade(alembic_config, revision)
 
-def _verify_tables_exist(self, engine: Engine) -> None:
+def _verify_tables_exist( engine: Engine) -> None:
     """Verifica se todas as tabelas esperadas foram criadas."""
     inspector = inspect(engine)
     tables = inspector.get_table_names()
@@ -37,7 +37,7 @@ def _verify_tables_exist(self, engine: Engine) -> None:
     for table in expected_tables:
         assert table in tables, f"Tabela '{table}' não foi criada"
 
-def _verify_usuarios_columns(self, engine: Engine) -> None:
+def _verify_usuarios_columns( engine: Engine) -> None:
     """Verifica se a tabela usuarios tem todas as colunas esperadas."""
     inspector = inspect(engine)
     columns = {col["name"] for col in inspector.get_columns("usuarios")}
@@ -55,7 +55,7 @@ def _verify_usuarios_columns(self, engine: Engine) -> None:
         f"Colunas faltando: {expected_columns - columns}"
     )
 
-def _verify_enum_values(self, engine: Engine, db_type: str) -> None:
+def _verify_enum_values( engine: Engine, db_type: str) -> None:
     """Verifica se os valores ENUM estão corretos."""
     if db_type == "postgresql":
         # No PostgreSQL, podemos verificar o tipo ENUM diretamente
@@ -83,7 +83,7 @@ def _verify_enum_values(self, engine: Engine, db_type: str) -> None:
         assert funcao_col is not None, "Coluna 'funcao' não encontrada"
 
 def _test_full_migration_cycle(
-    self, engine: Engine, alembic_config: Config, db_type: str
+     engine: Engine, alembic_config: Config, db_type: str
 ) -> None:
     """Testa o ciclo completo de upgrade e downgrade."""
     # Configure Alembic to use the provided engine's connection
@@ -112,9 +112,9 @@ def _test_full_migration_cycle(
         print(f"Revisão atual após o upgrade: {current_rev}")
 
     # Verificar que as tabelas foram criadas
-    self._verify_tables_exist(engine)
-    self._verify_usuarios_columns(engine)
-    self._verify_enum_values(engine, db_type)
+    _verify_tables_exist(engine)
+    _verify_usuarios_columns(engine)
+    _verify_enum_values(engine, db_type)
 
     # Teste de downgrade
     print("⬇️  Executando downgrade...")
@@ -135,28 +135,28 @@ def _test_full_migration_cycle(
     with engine.begin() as connection:
         alembic_config.attributes["connection"] = connection
         command.upgrade(alembic_config, "head")
-    self._verify_tables_exist(engine)
+    _verify_tables_exist(engine)
 
 def test_sqlite_migrations(
-    self, sqlite_engine: Engine, alembic_config: Config
+     sqlite_engine: Engine, alembic_config: Config
 ) -> None:
     """Testa as migrações no SQLite."""
-    self._test_full_migration_cycle(
+    _test_full_migration_cycle(
         sqlite_engine, alembic_config, "sqlite"
     )
 
 @pytest.mark.integration
 def test_postgres_migrations(
-    self, postgres_engine: Engine, alembic_config: Config
+     postgres_engine: Engine, alembic_config: Config
 ) -> None:
     """Testa as migrações no PostgreSQL."""
-    self._test_full_migration_cycle(
+    _test_full_migration_cycle(
         postgres_engine, alembic_config, "postgresql"
     )
 
 @pytest.mark.integration
 def test_migration_consistency(
-    self,
+    
     sqlite_engine: Engine,
     postgres_engine: Engine,
     alembic_config: Config,
