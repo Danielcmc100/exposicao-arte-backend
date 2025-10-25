@@ -78,6 +78,11 @@ Aplique as migrações pendentes com:
 ```bash
 uv run alembic upgrade head
 ```
+Reverta todas as migrações com:
+
+```bash
+uv run alembic downgrade base
+```
 
 ## Docker
 Para construir e rodar o container Docker:
