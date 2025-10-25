@@ -12,6 +12,14 @@ dependencies = [
     "sqlmodel>=0.0.24",
 ]
 
+[dependency-groups]
+dev = [
+    "schemathesis>=4.2.1",
+    "pytest>=8.3.4",
+    "testcontainers>=4.8.2",
+    "pyright>=1.1.407",
+]
+
 [tool.pyright]
 ignore = ["migrations"]
 
@@ -27,10 +35,47 @@ markers = [
 ]
 filterwarnings = ["ignore::DeprecationWarning:testcontainers"]
 
-[dependency-groups]
-dev = [
-    "schemathesis>=4.2.1",
-    "pytest>=8.3.4",
-    "testcontainers>=4.8.2",
-    "pyright>=1.1.407",
+
+[tool.ruff]
+exclude = ["venv", "migrations"]
+
+target-version = "py312"
+line-length = 79
+indent-width = 4
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "S603",
+    "S602",
+    "PGH003",
+    "S404",
+    "D203",
+    "D213",
+    "S101",
+    "FBT001",
+    "FBT002",
+    "FBT003",
+    "FIX002",
+    "COM812",
+    "D102",
+    "S607",
+    "S405",
+    "CPY001",
+    "DTZ005",
+    "D107",
+    "D105",
 ]
+
+preview = true
+fixable = ["ALL"]
+unfixable = []
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
