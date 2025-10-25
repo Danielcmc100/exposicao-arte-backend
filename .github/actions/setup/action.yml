@@ -6,4 +6,4 @@ runs:
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
       env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        database_url: ${{ secrets.DATABASE_URL }}
