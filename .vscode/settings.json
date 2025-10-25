@@ -1,0 +1,33 @@
+{
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": true,
+        "markdown": true,
+        "python": true
+    },
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+        {
+            "text": "Write commit messages in English following Conventional Commits. Use the format: 'type: description' where type is in lowercase (feat, fix, docs, style, refactor, test, chore). Use verbs in the imperative mood (e.g., 'Add', 'Fix', 'Remove'). Be specific and concise. Examples: 'feat: add user authentication', 'fix: correct email validation error'."
+        }
+    ],
+    "github.copilot.chat.doc.language": "pt-br",
+    "github.copilot.chat.doc.style": "Google",
+    "github.copilot.chat.doc.instructions": [
+        {
+            "text": "Gere docstrings em PORTUGUÊS usando o formato Google Style. Não inclua 'Args' (prefira type hints). Só inclua 'Raises' quando a função explicitamente lança exceções com raise. Sempre documente 'Returns' exceto quando retorna None. A docstring deve ser a primeira linha DENTRO do corpo da função, após o fechamento ) e tipo de retorno :."
+        }
+    ],
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit",
+        "source.fixAll": "explicit"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.rulers": [
+            79
+        ]
+    },
+    "python.analysis.typeCheckingMode": "basic"
+}
