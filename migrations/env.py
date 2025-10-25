@@ -2,6 +2,7 @@ from logging.config import fileConfig
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
+from sqlalchemy.engine import Engine
 from sqlmodel import SQLModel
 
 from src.config import settings
@@ -10,7 +11,11 @@ from src.models import *  # noqa: F403
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-config.set_main_option("sqlalchemy.url", settings.database_url)
+
+# Use settings.database_url only if there is no URL already configured
+# (this allows tests to configure their own URLs)
+if not config.get_main_option("sqlalchemy.url"):
+    config.set_main_option("sqlalchemy.url", settings.database_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -60,17 +65,37 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
+    # If there is a connection available in attributes (used by tests), use it
+    connectable = config.attributes.get("connection", None)
+    
+    if connectable is None:
+        # Otherwise, create a new engine
+        connectable = engine_from_config(
+            config.get_section(config.config_ini_section, {}),
+            prefix="sqlalchemy.",
+            poolclass=pool.NullPool,
+        )
 
-    with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
-
+    # Check if connectable is an Engine or Connection
+    if hasattr(connectable, 'begin'):
+        # It's a Connection object, use it directly
+        context.configure(
+            connection=connectable, 
+            target_metadata=target_metadata,
+            compare_type=True,
+        )
         with context.begin_transaction():
             context.run_migrations()
+    else:
+        # It's an Engine, create a connection
+        with connectable.connect() as connection:
+            context.configure(
+                connection=connection, 
+                target_metadata=target_metadata,
+                compare_type=True,
+            )
+            with context.begin_transaction():
+                context.run_migrations()
 
 
 if context.is_offline_mode():
