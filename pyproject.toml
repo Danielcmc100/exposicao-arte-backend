@@ -28,4 +28,9 @@ markers = [
 filterwarnings = ["ignore::DeprecationWarning:testcontainers"]
 
 [dependency-groups]
-dev = ["schemathesis>=4.2.1", "pytest>=8.3.4", "testcontainers>=4.8.2"]
+dev = [
+    "schemathesis>=4.2.1",
+    "pytest>=8.3.4",
+    "testcontainers>=4.8.2",
+    "pyright>=1.1.407",
+]
