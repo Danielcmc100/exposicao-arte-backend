@@ -11,5 +11,3 @@ runs:
       shell: bash
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
-      env:
-        DATABASE_URL: ${{ inputs.database_url }}
