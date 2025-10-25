@@ -1,3 +1,6 @@
+"""Aplicação principal FastAPI."""
+
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -13,7 +16,16 @@ from routers.usuario import rota as usuario_rota
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:  # noqa: RUF029
+    """Gerencia o ciclo de vida da aplicação.
+
+    Args:
+        _app: Instância da aplicação FastAPI (não utilizado).
+
+    Yields:
+        None: Controle de execução durante o ciclo de vida.
+
+    """
     init_db()
     yield
 
@@ -22,7 +34,13 @@ app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/")
-def read_root():
+def read_root() -> dict[str, str]:
+    """Endpoint raiz da API.
+
+    Returns:
+        dict: Mensagem de boas-vindas.
+
+    """
     return {"message": "Hello, World!"}
 
 

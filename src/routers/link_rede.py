@@ -1,3 +1,5 @@
+"""Rotas para gerenciamento de links de redes sociais."""
+
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
@@ -21,6 +23,12 @@ SessionInjetada = Annotated[Session, Depends(get_session)]
 
 @rota.get("/")
 def obter_links_rede(session: SessionInjetada) -> list[LinkRedeResponse]:
+    """Recupera todos os links de redes sociais do banco de dados.
+
+    Returns:
+        list[LinkRedeResponse]: Lista de links de redes sociais.
+
+    """
     links_rede_list = buscar_links_rede(session)
     return list(map(LinkRedeResponse.model_validate, links_rede_list))
 
@@ -29,6 +37,12 @@ def obter_links_rede(session: SessionInjetada) -> list[LinkRedeResponse]:
 def ler_link_rede(
     link_rede_id: int, session: SessionInjetada
 ) -> LinkRedeResponse | None:
+    """Recupera um link de rede social específico pelo seu ID.
+
+    Returns:
+        LinkRedeResponse | None: Link encontrado ou None se não existir.
+
+    """
     link_rede = buscar_link_rede_por_id(link_rede_id, session)
     return LinkRedeResponse.model_validate(link_rede) if link_rede else None
 
@@ -37,6 +51,12 @@ def ler_link_rede(
 def criar_link_rede(
     link_rede: LinkRedeCreate, session: SessionInjetada
 ) -> LinkRedeResponse:
+    """Cria um novo link de rede social no banco de dados.
+
+    Returns:
+        LinkRedeResponse: Dados do link criado.
+
+    """
     link_rede_db = LinkRedeDB.model_validate(link_rede)
     return LinkRedeResponse.model_validate(
         adicionar_link_rede(link_rede_db, session)
@@ -47,6 +67,12 @@ def criar_link_rede(
 def atualizar_link_rede(
     link_rede_id: int, link_rede: LinkRedeCreate, session: SessionInjetada
 ) -> LinkRedeResponse | None:
+    """Atualiza os dados de um link de rede social existente.
+
+    Returns:
+        LinkRedeResponse | None: Link atualizado ou None se não existir.
+
+    """
     link_rede_db = LinkRedeDB.model_validate(link_rede)
     link_rede_atualizado = atualizar_link_rede_bd(
         link_rede_id, link_rede_db, session
@@ -58,5 +84,11 @@ def atualizar_link_rede(
 def excluir_link_rede(
     link_rede_id: int, session: SessionInjetada
 ) -> LinkRedeResponse | None:
+    """Remove um link de rede social do banco de dados.
+
+    Returns:
+        LinkRedeResponse | None: Link removido ou None se não existir.
+
+    """
     link_rede_removido = remover_link_rede(link_rede_id, session)
     return LinkRedeResponse.model_validate(link_rede_removido)

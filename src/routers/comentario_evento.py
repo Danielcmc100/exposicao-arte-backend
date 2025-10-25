@@ -1,3 +1,5 @@
+"""Rotas para gerenciamento de comentários em eventos."""
+
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
@@ -28,6 +30,12 @@ SessionInjetada = Annotated[Session, Depends(get_session)]
 def obter_comentarios(
     session: SessionInjetada,
 ) -> list[ComentarioEventoResponse]:
+    """Recupera todos os comentários do banco de dados.
+
+    Returns:
+        list[ComentarioEventoResponse]: Lista de comentários.
+
+    """
     comentarios_list = buscar_comentarios(session)
     return list(map(ComentarioEventoResponse.model_validate, comentarios_list))
 
@@ -36,6 +44,12 @@ def obter_comentarios(
 def ler_comentario(
     comentario_id: int, session: SessionInjetada
 ) -> ComentarioEventoResponse | None:
+    """Recupera um comentário específico pelo seu ID.
+
+    Returns:
+        ComentarioEventoResponse | None: Comentário encontrado ou None.
+
+    """
     comentario = buscar_comentario_por_id(comentario_id, session)
     return (
         ComentarioEventoResponse.model_validate(comentario)
@@ -48,6 +62,12 @@ def ler_comentario(
 def obter_comentarios_por_evento(
     evento_id: int, session: SessionInjetada
 ) -> list[ComentarioEventoResponse]:
+    """Recupera todos os comentários de um evento específico.
+
+    Returns:
+        list[ComentarioEventoResponse]: Lista de comentários do evento.
+
+    """
     comentarios_list = buscar_comentarios_por_evento(evento_id, session)
     return list(map(ComentarioEventoResponse.model_validate, comentarios_list))
 
@@ -56,6 +76,12 @@ def obter_comentarios_por_evento(
 def obter_comentarios_por_usuario(
     usuario_id: int, session: SessionInjetada
 ) -> list[ComentarioEventoResponse]:
+    """Recupera todos os comentários de um usuário específico.
+
+    Returns:
+        list[ComentarioEventoResponse]: Lista de comentários do usuário.
+
+    """
     comentarios_list = buscar_comentarios_por_usuario(usuario_id, session)
     return list(map(ComentarioEventoResponse.model_validate, comentarios_list))
 
@@ -64,6 +90,12 @@ def obter_comentarios_por_usuario(
 def criar_comentario(
     comentario: ComentarioEventoCreate, session: SessionInjetada
 ) -> ComentarioEventoResponse:
+    """Cria um novo comentário no banco de dados.
+
+    Returns:
+        ComentarioEventoResponse: Dados do comentário criado.
+
+    """
     comentario_db = ComentarioEventoDB.model_validate(comentario)
     return ComentarioEventoResponse.model_validate(
         adicionar_comentario(comentario_db, session)
@@ -76,6 +108,12 @@ def atualizar_comentario_router(
     comentario: ComentarioEventoCreate,
     session: SessionInjetada,
 ) -> ComentarioEventoResponse | None:
+    """Atualiza os dados de um comentário existente.
+
+    Returns:
+        ComentarioEventoResponse | None: Comentário atualizado ou None.
+
+    """
     comentario_db = ComentarioEventoDB.model_validate(comentario)
     comentario_atualizado = atualizar_comentario(
         comentario_id, comentario_db, session
@@ -87,5 +125,11 @@ def atualizar_comentario_router(
 def excluir_comentario(
     comentario_id: int, session: SessionInjetada
 ) -> ComentarioEventoResponse | None:
+    """Remove um comentário do banco de dados.
+
+    Returns:
+        ComentarioEventoResponse | None: Comentário removido ou None.
+
+    """
     comentario_removido = remover_comentario(comentario_id, session)
     return ComentarioEventoResponse.model_validate(comentario_removido)

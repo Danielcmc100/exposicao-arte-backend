@@ -1,5 +1,6 @@
 """Configuração de fixtures do pytest."""
 
+import logging
 import tempfile
 from collections.abc import Generator
 from pathlib import Path
@@ -10,10 +11,23 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
 from testcontainers.postgres import PostgresContainer
 
+# Configurar logging para testes
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
+
+logger = logging.getLogger(__name__)
+
 
 @pytest.fixture
 def alembic_config() -> Config:
-    """Retorna a configuração do Alembic."""
+    """Retorna a configuração do Alembic.
+
+    Returns:
+        Config: Configuração do Alembic com caminhos corretos.
+
+    """
     project_root = Path(__file__).parent.parent
     alembic_ini_path = project_root / "alembic.ini"
 
@@ -25,7 +39,12 @@ def alembic_config() -> Config:
 
 @pytest.fixture
 def sqlite_engine() -> Generator[Engine, None, None]:
-    """Cria um engine SQLite temporário para testes."""
+    """Cria um engine SQLite temporário para testes.
+
+    Yields:
+        Engine: Engine SQLite configurado e pronto para uso.
+
+    """
     # Criar um arquivo temporário para o banco SQLite
     with tempfile.NamedTemporaryFile(suffix=".db", delete=False) as tmp_file:
         db_path = tmp_file.name
@@ -44,8 +63,14 @@ def sqlite_engine() -> Generator[Engine, None, None]:
 @pytest.fixture(scope="module")
 def postgres_container() -> Generator[PostgresContainer, None, None]:
     """Cria um container PostgreSQL usando testcontainers.
+
     Seguindo o padrão da documentação oficial.
-    Scope 'module' significa que o container é compartilhado entre testes do mesmo módulo.
+    Scope 'module' significa que o container é compartilhado entre
+    testes do mesmo módulo.
+
+    Yields:
+        PostgresContainer: Container PostgreSQL iniciado e pronto.
+
     """
     postgres = PostgresContainer("postgres:16-alpine")
     postgres.start()
@@ -60,8 +85,13 @@ def postgres_engine(
     postgres_container: PostgresContainer,
 ) -> Generator[Engine, None, None]:
     """Cria um engine PostgreSQL conectado ao container de teste.
+
     Seguindo o exemplo da documentação oficial do testcontainers.
     Cada teste recebe um engine limpo.
+
+    Yields:
+        Engine: Engine PostgreSQL configurado e conectado.
+
     """
     # Obter connection string do container
     connection_url = postgres_container.get_connection_url()
@@ -74,7 +104,8 @@ def postgres_engine(
         result = connection.execute(text("SELECT version()"))
         version = result.fetchone()
         if version:
-            print(f"✅ PostgreSQL conectado: {version[0][:50]}...")
+            message = f"✅ PostgreSQL conectado: {version[0][:50]}..."
+            logger.info(message)
 
     yield engine
 

@@ -1,3 +1,5 @@
+"""Repositório para operações de obras."""
+
 from collections.abc import Sequence
 
 from sqlmodel import Session, select
@@ -7,14 +9,43 @@ from models.obra import ObraDB
 
 
 def buscar_obras(session: Session) -> Sequence[ObraDB]:
+    """Retorna todas as obras.
+
+    Args:
+        session: Sessão do banco de dados.
+
+    Returns:
+        Sequence[ObraDB]: Lista de obras.
+
+    """
     return session.exec(select(ObraDB)).all()
 
 
 def buscar_obra_por_id(obra_id: int, session: Session) -> ObraDB | None:
+    """Busca uma obra pelo ID.
+
+    Args:
+        obra_id: ID da obra.
+        session: Sessão do banco de dados.
+
+    Returns:
+        ObraDB | None: Obra encontrada ou None.
+
+    """
     return session.get(ObraDB, obra_id)
 
 
 def adicionar_obra(obra: ObraDB, session: Session) -> ObraDB:
+    """Adiciona uma nova obra.
+
+    Args:
+        obra: Dados da obra a ser adicionada.
+        session: Sessão do banco de dados.
+
+    Returns:
+        ObraDB: Obra adicionada.
+
+    """
     session.add(obra)
     session.commit()
     session.refresh(obra)
@@ -24,6 +55,17 @@ def adicionar_obra(obra: ObraDB, session: Session) -> ObraDB:
 def atualizar_obra_bd(
     obra_id: int, obra: ObraDB, session: Session
 ) -> ObraDB | None:
+    """Atualiza uma obra existente.
+
+    Args:
+        obra_id: ID da obra a ser atualizada.
+        obra: Novos dados da obra.
+        session: Sessão do banco de dados.
+
+    Returns:
+        ObraDB | None: Obra atualizada ou None.
+
+    """
     obra_existente = session.get(ObraDB, obra_id)
     if not obra_existente:
         return None
@@ -36,6 +78,16 @@ def atualizar_obra_bd(
 
 
 def remover_obra(obra_id: int, session: Session) -> ObraDB | None:
+    """Remove uma obra.
+
+    Args:
+        obra_id: ID da obra a ser removida.
+        session: Sessão do banco de dados.
+
+    Returns:
+        ObraDB | None: Obra removida ou None.
+
+    """
     obra_existente = buscar_obra_por_id(obra_id, session)
     if not obra_existente:
         return None
@@ -47,6 +99,16 @@ def remover_obra(obra_id: int, session: Session) -> ObraDB | None:
 def buscar_obras_por_evento(
     evento_id: int, session: Session
 ) -> Sequence[ObraDB]:
+    """Retorna todas as obras de um evento específico.
+
+    Args:
+        evento_id: ID do evento.
+        session: Sessão do banco de dados.
+
+    Returns:
+        Sequence[ObraDB]: Lista de obras do evento.
+
+    """
     evento_existente = session.get(EventoDB, evento_id)
     if not evento_existente:
         return []
