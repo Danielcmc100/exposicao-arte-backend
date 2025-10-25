@@ -47,6 +47,8 @@ jobs:
         with:
           database_url: ${{ secrets.DATABASE_URL }}
       - run: uv run pytest -v --durations=0 --cov --cov-report=xml
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
       # - name: Upload Coverage to Codecov
       #   uses: codecov/codecov-action@v4
         # with:
