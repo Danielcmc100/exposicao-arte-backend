@@ -31,7 +31,7 @@ def criar_obra_evento(
     return adicionar_obra_ao_evento(session, obra)
 
 
-@rota.delete("/{obra_id}", status_code=204)
+@rota.delete("/", status_code=204)
 def excluir_obra(obra: ObraEventoDB, session: SessionInjetada) -> None:
     """Remove a associação de uma obra com um evento.
 
