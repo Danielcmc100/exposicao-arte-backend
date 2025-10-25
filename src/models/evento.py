@@ -3,7 +3,8 @@ from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship, SQLModel
 
-from models.obra_evento import ObraEventoDB
+from .avaliacoes_eventos import AvaliacaoEventoDB
+from .obra_evento import ObraEventoDB
 
 if TYPE_CHECKING:
     from models import ComentarioEventoDB, ObraDB, UsuarioDB
@@ -39,4 +40,7 @@ class EventoDB(EventoCreate, table=True):
     comentarios: list["ComentarioEventoDB"] = Relationship()
     obras: list["ObraDB"] = Relationship(
         back_populates="eventos", link_model=ObraEventoDB
+    )
+    avaliacoes_eventos: list["AvaliacaoEventoDB"] = Relationship(
+        back_populates="evento"
     )

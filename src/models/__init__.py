@@ -1,3 +1,4 @@
+from .avaliacoes_eventos import AvaliacaoEventoDB
 from .categoria import CategoriaDB
 from .comentario_evento import ComentarioEventoDB
 from .comentario_obra import ComentarioObraDB
@@ -16,4 +17,5 @@ __all__ = [
     "ComentarioEventoDB",
     "ComentarioObraDB",
     "ObraEventoDB",
+    "AvaliacaoEventoDB",
 ]
