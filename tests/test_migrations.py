@@ -79,7 +79,9 @@ class TestMigrations:
             # (SQLite não tem ENUMs nativos, então apenas verificamos a coluna)
             inspector = inspect(engine)
             columns = inspector.get_columns("usuarios")
-            funcao_col = next((col for col in columns if col["name"] == "funcao"), None)
+            funcao_col = next(
+                (col for col in columns if col["name"] == "funcao"), None
+            )
             assert funcao_col is not None, "Coluna 'funcao' não encontrada"
 
     def _test_full_migration_cycle(
@@ -141,18 +143,25 @@ class TestMigrations:
         self, sqlite_engine: Engine, alembic_config: Config
     ) -> None:
         """Testa as migrações no SQLite."""
-        self._test_full_migration_cycle(sqlite_engine, alembic_config, "sqlite")
+        self._test_full_migration_cycle(
+            sqlite_engine, alembic_config, "sqlite"
+        )
 
     @pytest.mark.integration
     def test_postgres_migrations(
         self, postgres_engine: Engine, alembic_config: Config
     ) -> None:
         """Testa as migrações no PostgreSQL."""
-        self._test_full_migration_cycle(postgres_engine, alembic_config, "postgresql")
+        self._test_full_migration_cycle(
+            postgres_engine, alembic_config, "postgresql"
+        )
 
     @pytest.mark.integration
     def test_migration_consistency(
-        self, sqlite_engine: Engine, postgres_engine: Engine, alembic_config: Config
+        self,
+        sqlite_engine: Engine,
+        postgres_engine: Engine,
+        alembic_config: Config,
     ) -> None:
         """Testa se as migrações produzem esquemas consistentes
         entre SQLite e PostgreSQL.
@@ -187,7 +196,9 @@ class TestMigrations:
         )
 
         # Comparar colunas da tabela usuarios
-        sqlite_cols = {col["name"] for col in sqlite_inspector.get_columns("usuarios")}
+        sqlite_cols = {
+            col["name"] for col in sqlite_inspector.get_columns("usuarios")
+        }
         postgres_cols = {
             col["name"] for col in postgres_inspector.get_columns("usuarios")
         }
@@ -226,7 +237,9 @@ class TestMigrationRobustness:
         # Upgrade até a primeira migração
         with postgres_engine.begin() as connection:
             alembic_config.attributes["connection"] = connection
-            command.upgrade(alembic_config, "41590745c3be")  # create users table
+            command.upgrade(
+                alembic_config, "41590745c3be"
+            )  # create users table
 
         inspector = inspect(postgres_engine)
         tables = inspector.get_table_names()

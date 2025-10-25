@@ -13,7 +13,9 @@ def adicionar_obra_ao_evento(
     return obra_evento
 
 
-def remover_obra_do_evento(session: Session, obra_evento: ObraEventoDB) -> bool:
+def remover_obra_do_evento(
+    session: Session, obra_evento: ObraEventoDB
+) -> bool:
     """Remove uma obra de um evento"""
     statement = select(ObraEventoDB).where(
         ObraEventoDB.id_obra == obra_evento.id_obra,

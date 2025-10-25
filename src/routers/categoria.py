@@ -38,7 +38,9 @@ def criar_categoria(
     categoria: CategoriaCreate, session: SessionInjetada
 ) -> CategoriaResponse:
     categoria_db = CategoriaDB.model_validate(categoria)
-    return CategoriaResponse.model_validate(adicionar_categoria(categoria_db, session))
+    return CategoriaResponse.model_validate(
+        adicionar_categoria(categoria_db, session)
+    )
 
 
 @rota.put("/{categoria_id}")
@@ -46,7 +48,9 @@ def atualizar_categoria(
     categoria_id: int, categoria: CategoriaCreate, session: SessionInjetada
 ) -> CategoriaResponse | None:
     categoria_db = CategoriaDB.model_validate(categoria)
-    categoria_atualizada = atualizar_categoria_bd(categoria_id, categoria_db, session)
+    categoria_atualizada = atualizar_categoria_bd(
+        categoria_id, categoria_db, session
+    )
     return CategoriaResponse.model_validate(categoria_atualizada)
 
 

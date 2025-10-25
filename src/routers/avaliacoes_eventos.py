@@ -25,7 +25,9 @@ SessionInjetada = Annotated[Session, Depends(get_session)]
 
 
 @rota.get("/")
-def obter_avaliacoes(session: SessionInjetada) -> list[AvaliacaoEventoResponse]:
+def obter_avaliacoes(
+    session: SessionInjetada,
+) -> list[AvaliacaoEventoResponse]:
     avaliacoes_list = buscar_avaliacoes(session)
     return list(map(AvaliacaoEventoResponse.model_validate, avaliacoes_list))
 
@@ -35,7 +37,11 @@ def ler_avaliacao(
     avaliacao_id: int, session: SessionInjetada
 ) -> AvaliacaoEventoResponse | None:
     avaliacao = buscar_avaliacao_por_id(avaliacao_id, session)
-    return AvaliacaoEventoResponse.model_validate(avaliacao) if avaliacao else None
+    return (
+        AvaliacaoEventoResponse.model_validate(avaliacao)
+        if avaliacao
+        else None
+    )
 
 
 @rota.get("/evento/{evento_id}")
@@ -66,11 +72,19 @@ def criar_avaliacao(
 
 @rota.put("/{avaliacao_id}")
 def atualizar_avaliacao_router(
-    avaliacao_id: int, avaliacao: AvaliacaoEventoCreate, session: SessionInjetada
+    avaliacao_id: int,
+    avaliacao: AvaliacaoEventoCreate,
+    session: SessionInjetada,
 ) -> AvaliacaoEventoResponse | None:
     avaliacao_db = AvaliacaoEventoDB.model_validate(avaliacao)
-    avaliacao_atualizada = atualizar_avaliacao(avaliacao_id, avaliacao_db, session)
-    return AvaliacaoEventoResponse.model_validate(avaliacao_atualizada) if avaliacao_atualizada else None
+    avaliacao_atualizada = atualizar_avaliacao(
+        avaliacao_id, avaliacao_db, session
+    )
+    return (
+        AvaliacaoEventoResponse.model_validate(avaliacao_atualizada)
+        if avaliacao_atualizada
+        else None
+    )
 
 
 @rota.delete("/{avaliacao_id}")
@@ -78,4 +92,8 @@ def excluir_avaliacao(
     avaliacao_id: int, session: SessionInjetada
 ) -> AvaliacaoEventoResponse | None:
     avaliacao_removida = remover_avaliacao(avaliacao_id, session)
-    return AvaliacaoEventoResponse.model_validate(avaliacao_removida) if avaliacao_removida else None
+    return (
+        AvaliacaoEventoResponse.model_validate(avaliacao_removida)
+        if avaliacao_removida
+        else None
+    )

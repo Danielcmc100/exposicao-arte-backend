@@ -27,13 +27,17 @@ def obter_eventos(session: SessionInjetada) -> list[EventoResponse]:
 
 
 @rota.get("/{evento_id}")
-def ler_evento(evento_id: int, session: SessionInjetada) -> EventoResponse | None:
+def ler_evento(
+    evento_id: int, session: SessionInjetada
+) -> EventoResponse | None:
     evento = buscar_evento_por_id(evento_id, session)
     return EventoResponse.model_validate(evento) if evento else None
 
 
 @rota.post("/")
-def criar_evento(evento: EventoCreate, session: SessionInjetada) -> EventoResponse:
+def criar_evento(
+    evento: EventoCreate, session: SessionInjetada
+) -> EventoResponse:
     evento_db = EventoDB.model_validate(evento)
     return EventoResponse.model_validate(adicionar_evento(evento_db, session))
 
@@ -48,7 +52,9 @@ def atualizar_evento(
 
 
 @rota.delete("/{evento_id}")
-def excluir_evento(evento_id: int, session: SessionInjetada) -> EventoResponse | None:
+def excluir_evento(
+    evento_id: int, session: SessionInjetada
+) -> EventoResponse | None:
     evento_removido = remover_evento(evento_id, session)
     return EventoResponse.model_validate(evento_removido)
 

@@ -21,7 +21,9 @@ def adicionar_obra(obra: ObraDB, session: Session) -> ObraDB:
     return obra
 
 
-def atualizar_obra_bd(obra_id: int, obra: ObraDB, session: Session) -> ObraDB | None:
+def atualizar_obra_bd(
+    obra_id: int, obra: ObraDB, session: Session
+) -> ObraDB | None:
     obra_existente = session.get(ObraDB, obra_id)
     if not obra_existente:
         return None
@@ -42,7 +44,9 @@ def remover_obra(obra_id: int, session: Session) -> ObraDB | None:
     return obra_existente
 
 
-def buscar_obras_por_evento(evento_id: int, session: Session) -> Sequence[ObraDB]:
+def buscar_obras_por_evento(
+    evento_id: int, session: Session
+) -> Sequence[ObraDB]:
     evento_existente = session.get(EventoDB, evento_id)
     if not evento_existente:
         return []

@@ -22,7 +22,9 @@ def buscar_comentarios_por_evento(
 ) -> Sequence[ComentarioEventoDB]:
     """Retorna todos os comentários de um evento específico."""
     return session.exec(
-        select(ComentarioEventoDB).where(ComentarioEventoDB.evento_id == evento_id)
+        select(ComentarioEventoDB).where(
+            ComentarioEventoDB.evento_id == evento_id
+        )
     ).all()
 
 
@@ -31,7 +33,9 @@ def buscar_comentarios_por_usuario(
 ) -> Sequence[ComentarioEventoDB]:
     """Retorna todos os comentários feitos por um usuário específico."""
     return session.exec(
-        select(ComentarioEventoDB).where(ComentarioEventoDB.usuario_id == usuario_id)
+        select(ComentarioEventoDB).where(
+            ComentarioEventoDB.usuario_id == usuario_id
+        )
     ).all()
 
 

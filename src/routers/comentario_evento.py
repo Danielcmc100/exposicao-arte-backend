@@ -25,7 +25,9 @@ SessionInjetada = Annotated[Session, Depends(get_session)]
 
 
 @rota.get("/")
-def obter_comentarios(session: SessionInjetada) -> list[ComentarioEventoResponse]:
+def obter_comentarios(
+    session: SessionInjetada,
+) -> list[ComentarioEventoResponse]:
     comentarios_list = buscar_comentarios(session)
     return list(map(ComentarioEventoResponse.model_validate, comentarios_list))
 
@@ -35,7 +37,11 @@ def ler_comentario(
     comentario_id: int, session: SessionInjetada
 ) -> ComentarioEventoResponse | None:
     comentario = buscar_comentario_por_id(comentario_id, session)
-    return ComentarioEventoResponse.model_validate(comentario) if comentario else None
+    return (
+        ComentarioEventoResponse.model_validate(comentario)
+        if comentario
+        else None
+    )
 
 
 @rota.get("/evento/{evento_id}")
@@ -66,10 +72,14 @@ def criar_comentario(
 
 @rota.put("/{comentario_id}")
 def atualizar_comentario_router(
-    comentario_id: int, comentario: ComentarioEventoCreate, session: SessionInjetada
+    comentario_id: int,
+    comentario: ComentarioEventoCreate,
+    session: SessionInjetada,
 ) -> ComentarioEventoResponse | None:
     comentario_db = ComentarioEventoDB.model_validate(comentario)
-    comentario_atualizado = atualizar_comentario(comentario_id, comentario_db, session)
+    comentario_atualizado = atualizar_comentario(
+        comentario_id, comentario_db, session
+    )
     return ComentarioEventoResponse.model_validate(comentario_atualizado)
 
 

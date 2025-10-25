@@ -38,7 +38,9 @@ def criar_link_rede(
     link_rede: LinkRedeCreate, session: SessionInjetada
 ) -> LinkRedeResponse:
     link_rede_db = LinkRedeDB.model_validate(link_rede)
-    return LinkRedeResponse.model_validate(adicionar_link_rede(link_rede_db, session))
+    return LinkRedeResponse.model_validate(
+        adicionar_link_rede(link_rede_db, session)
+    )
 
 
 @rota.put("/{link_rede_id}")
@@ -46,7 +48,9 @@ def atualizar_link_rede(
     link_rede_id: int, link_rede: LinkRedeCreate, session: SessionInjetada
 ) -> LinkRedeResponse | None:
     link_rede_db = LinkRedeDB.model_validate(link_rede)
-    link_rede_atualizado = atualizar_link_rede_bd(link_rede_id, link_rede_db, session)
+    link_rede_atualizado = atualizar_link_rede_bd(
+        link_rede_id, link_rede_db, session
+    )
     return LinkRedeResponse.model_validate(link_rede_atualizado)
 
 

@@ -47,7 +47,9 @@ def remover_evento(evento_id: int, session: Session) -> EventoDB | None:
     return evento_existente
 
 
-def buscar_eventos_por_obra(obra_id: int, session: Session) -> Sequence[EventoDB]:
+def buscar_eventos_por_obra(
+    obra_id: int, session: Session
+) -> Sequence[EventoDB]:
     obra_existente = session.get(ObraDB, obra_id)
     if not obra_existente:
         return []

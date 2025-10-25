@@ -27,7 +27,9 @@ def adicionar_comentario_obra(
 def atualizar_comentario_obra_bd(
     comentario_obra_id: int, comentario: ComentarioObraDB, session: Session
 ) -> ComentarioObraDB | None:
-    comentario_obra_existente = session.get(ComentarioObraDB, comentario_obra_id)
+    comentario_obra_existente = session.get(
+        ComentarioObraDB, comentario_obra_id
+    )
     if not comentario_obra_existente:
         return None
 

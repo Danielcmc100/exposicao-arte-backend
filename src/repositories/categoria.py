@@ -9,11 +9,15 @@ def buscar_categorias(session: Session) -> Sequence[CategoriaDB]:
     return session.exec(select(CategoriaDB)).all()
 
 
-def buscar_categoria_por_id(categoria_id: int, session: Session) -> CategoriaDB | None:
+def buscar_categoria_por_id(
+    categoria_id: int, session: Session
+) -> CategoriaDB | None:
     return session.get(CategoriaDB, categoria_id)
 
 
-def adicionar_categoria(categoria: CategoriaDB, session: Session) -> CategoriaDB:
+def adicionar_categoria(
+    categoria: CategoriaDB, session: Session
+) -> CategoriaDB:
     session.add(categoria)
     session.commit()
     session.refresh(categoria)
@@ -32,7 +36,9 @@ def atualizar_categoria_bd(
     return categoria_existente
 
 
-def remover_categoria(categoria_id: int, session: Session) -> CategoriaDB | None:
+def remover_categoria(
+    categoria_id: int, session: Session
+) -> CategoriaDB | None:
     categoria_existente = buscar_categoria_por_id(categoria_id, session)
     if not categoria_existente:
         return None

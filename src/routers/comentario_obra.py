@@ -24,7 +24,9 @@ SessionInjetada = Annotated[Session, Depends(get_session)]
 
 
 @rota.get("/")
-def obter_comentarios_obras(session: SessionInjetada) -> list[ComentarioObraResponse]:
+def obter_comentarios_obras(
+    session: SessionInjetada,
+) -> list[ComentarioObraResponse]:
     comentarios_list = buscar_comentarios_obras(session)
     return list(map(ComentarioObraResponse.model_validate, comentarios_list))
 
@@ -33,7 +35,9 @@ def obter_comentarios_obras(session: SessionInjetada) -> list[ComentarioObraResp
 def ler_comentario_obra(
     comentario_obra_id: int, session: SessionInjetada
 ) -> ComentarioObraResponse | None:
-    comentario_obra = buscar_comentario_obra_por_id(comentario_obra_id, session)
+    comentario_obra = buscar_comentario_obra_por_id(
+        comentario_obra_id, session
+    )
     return (
         ComentarioObraResponse.model_validate(comentario_obra)
         if comentario_obra
@@ -72,5 +76,7 @@ def atualizar_comentario_obra(
 def excluir_comentario_obra(
     comentario_obra_id: int, session: SessionInjetada
 ) -> ComentarioObraResponse | None:
-    comentario_obra_removido = remover_comentario_obra(comentario_obra_id, session)
+    comentario_obra_removido = remover_comentario_obra(
+        comentario_obra_id, session
+    )
     return ComentarioObraResponse.model_validate(comentario_obra_removido)

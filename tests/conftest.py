@@ -56,7 +56,9 @@ def postgres_container() -> Generator[PostgresContainer, None, None]:
 
 
 @pytest.fixture
-def postgres_engine(postgres_container: PostgresContainer) -> Generator[Engine, None, None]:
+def postgres_engine(
+    postgres_container: PostgresContainer,
+) -> Generator[Engine, None, None]:
     """Cria um engine PostgreSQL conectado ao container de teste.
     Seguindo o exemplo da documentação oficial do testcontainers.
     Cada teste recebe um engine limpo.

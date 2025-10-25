@@ -26,15 +26,21 @@ def obter_usuarios(session: SessionInjetada) -> list[UsuarioResponse]:
 
 
 @rota.get("/{usuario_id}")
-def ler_usuario(usuario_id: int, session: SessionInjetada) -> UsuarioResponse | None:
+def ler_usuario(
+    usuario_id: int, session: SessionInjetada
+) -> UsuarioResponse | None:
     usuario = buscar_usuario_por_id(usuario_id, session)
     return UsuarioResponse.model_validate(usuario) if usuario else None
 
 
 @rota.post("/")
-def criar_usuario(usuario: UsuarioCreate, session: SessionInjetada) -> UsuarioResponse:
+def criar_usuario(
+    usuario: UsuarioCreate, session: SessionInjetada
+) -> UsuarioResponse:
     usuario_db = UsuarioDB.model_validate(usuario)
-    return UsuarioResponse.model_validate(adicionar_usuario(usuario_db, session))
+    return UsuarioResponse.model_validate(
+        adicionar_usuario(usuario_db, session)
+    )
 
 
 @rota.put("/{usuario_id}")

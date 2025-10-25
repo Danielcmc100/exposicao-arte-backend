@@ -9,7 +9,9 @@ def buscar_usuarios(session: Session) -> Sequence[UsuarioDB]:
     return session.exec(select(UsuarioDB)).all()
 
 
-def buscar_usuario_por_id(usuario_id: int, session: Session) -> UsuarioDB | None:
+def buscar_usuario_por_id(
+    usuario_id: int, session: Session
+) -> UsuarioDB | None:
     return session.get(UsuarioDB, usuario_id)
 
 

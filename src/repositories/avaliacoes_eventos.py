@@ -22,7 +22,9 @@ def buscar_avaliacoes_por_evento(
 ) -> Sequence[AvaliacaoEventoDB]:
     """Retorna todas as avaliações de um evento específico."""
     return session.exec(
-        select(AvaliacaoEventoDB).where(AvaliacaoEventoDB.evento_id == evento_id)
+        select(AvaliacaoEventoDB).where(
+            AvaliacaoEventoDB.evento_id == evento_id
+        )
     ).all()
 
 
@@ -31,7 +33,9 @@ def buscar_avaliacoes_por_usuario(
 ) -> Sequence[AvaliacaoEventoDB]:
     """Retorna todas as avaliações feitas por um usuário específico."""
     return session.exec(
-        select(AvaliacaoEventoDB).where(AvaliacaoEventoDB.usuario_id == usuario_id)
+        select(AvaliacaoEventoDB).where(
+            AvaliacaoEventoDB.usuario_id == usuario_id
+        )
     ).all()
 
 

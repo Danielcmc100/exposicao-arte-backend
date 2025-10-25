@@ -9,7 +9,9 @@ def buscar_links_rede(session: Session) -> Sequence[LinkRedeDB]:
     return session.exec(select(LinkRedeDB)).all()
 
 
-def buscar_link_rede_por_id(link_rede_id: int, session: Session) -> LinkRedeDB | None:
+def buscar_link_rede_por_id(
+    link_rede_id: int, session: Session
+) -> LinkRedeDB | None:
     return session.get(LinkRedeDB, link_rede_id)
 
 
@@ -35,7 +37,9 @@ def atualizar_link_rede_bd(
     return link_rede_existente
 
 
-def remover_link_rede(link_rede_id: int, session: Session) -> LinkRedeDB | None:
+def remover_link_rede(
+    link_rede_id: int, session: Session
+) -> LinkRedeDB | None:
     link_rede_existente = buscar_link_rede_por_id(link_rede_id, session)
     if not link_rede_existente:
         return None

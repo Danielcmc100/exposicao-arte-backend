@@ -50,7 +50,9 @@ def atualizar_obra(
 
 
 @rota.delete("/{obra_id}")
-def excluir_obra(obra_id: int, session: SessionInjetada) -> ObraResponse | None:
+def excluir_obra(
+    obra_id: int, session: SessionInjetada
+) -> ObraResponse | None:
     categoria_removida = remover_obra(obra_id, session)
     return ObraResponse.model_validate(categoria_removida)
 

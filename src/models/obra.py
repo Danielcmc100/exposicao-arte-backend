@@ -47,7 +47,9 @@ class ObraDB(ObraResponse, table=True):
         sa_relationship_kwargs={"foreign_keys": ("ObraDB.categoria_id")},
     )
 
-    comentarios_obra: list["ComentarioObraDB"] = Relationship(back_populates="obra")
+    comentarios_obra: list["ComentarioObraDB"] = Relationship(
+        back_populates="obra"
+    )
     eventos: list["EventoDB"] = Relationship(
         back_populates="obras", link_model=ObraEventoDB
     )
