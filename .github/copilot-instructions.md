@@ -18,6 +18,7 @@
 ## Docstrings
 - **Args** deve ser utilizado o menos possível (preferir type hints)
 - **Raises** só deve ser utilizado quando a função explicitamente lança uma exceção com `raise`
+- **Returns** devem ser documentados, exceto quando a função retorna `None`
 - Priorize descrições claras e concisas sobre seções desnecessárias
 
 ## Formatação (Ruff)
