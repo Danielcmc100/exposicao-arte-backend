@@ -23,6 +23,8 @@ class Funcao(Enum):
 
 
 class UsuarioBase(SQLModel):
+    """Campos básicos de um usuário (usado como base para outros modelos)."""
+
     nome: str
     email: EmailStr
     funcao: Funcao
@@ -30,20 +32,37 @@ class UsuarioBase(SQLModel):
 
 
 class UsuarioCreate(UsuarioBase):
+    """Modelo usado na criação de usuário (input da API)."""
+
+    senha: str
+
+
+class UsuarioLogin(SQLModel):
+    """Modelo usado no endpoint de login."""
+
+    email: EmailStr
     senha: str
 
 
 class UsuarioResponse(UsuarioBase):
+    """Modelo retornado nas respostas da API (output)."""
+
     id: int
 
 
-class UsuarioDB(UsuarioCreate, table=True):
+class UsuarioDB(SQLModel, table=True):
+    """Modelo persistido no banco de dados."""
+
     __tablename__ = "usuarios"  # type: ignore
 
-    id: int = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
+    nome: str
+    email: EmailStr = Field(index=True, unique=True, nullable=False)
+    funcao: Funcao
+    biografia: str
+    senha_hash: str
 
     comentarios_evento: list["ComentarioEventoDB"] = Relationship()
-
     links: list["LinkRedeDB"] = Relationship()
     obras: list["ObraDB"] = Relationship(back_populates="usuario")
     comentarios_obra: list["ComentarioObraDB"] = Relationship(

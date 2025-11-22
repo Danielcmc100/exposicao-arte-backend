@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from database import init_db
+from routers.auth import router as auth_rota
 from routers.categoria import rota as categoria_rota
 from routers.comentario_evento import rota as comentario_evento_rota
 from routers.comentario_obra import rota as comentario_obra_rota
@@ -51,3 +52,4 @@ app.include_router(evento_rota)
 app.include_router(comentario_evento_rota)
 app.include_router(comentario_obra_rota)
 app.include_router(obra_rota)
+app.include_router(auth_rota)
