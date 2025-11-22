@@ -1,18 +1,40 @@
+"""Módulo que define as rotas de autenticação da API."""
+
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session
 
 from database import get_session
-from models.usuario import UsuarioLogin, UsuarioResponse, UsuarioDB
+from models.usuario import UsuarioDB, UsuarioLogin, UsuarioResponse
 from repositories.usuario import get_usuario_by_email
-from security import verify_password, create_access_token
+from security import create_access_token, verify_password
 
 router = APIRouter(prefix="/auth", tags=["auth"])
+
 
 class LoginResponse(UsuarioResponse):
     access_token: str
 
-@router.post("/login", response_model=LoginResponse)
-def login(payload: UsuarioLogin, session: Session = Depends(get_session)) -> LoginResponse:
+
+@router.post("/login")
+def login(
+    payload: UsuarioLogin, session: Annotated[Session, Depends(get_session)]
+) -> LoginResponse:
+    """Realiza o login de um usuário e retorna um token de acesso.
+
+    Args:
+        payload: Credenciais de login (email e senha).
+        session: Sessão do banco de dados.
+
+    Raises:
+        HTTPException: Lançada se as credenciais forem inválidas ou se
+            ocorrer um erro interno no servidor.
+
+    Returns:
+        Os dados do usuário e o token de acesso.
+
+    """
     user: UsuarioDB | None = get_usuario_by_email(session, payload.email)
     if not user or not verify_password(payload.senha, user.senha_hash):
         raise HTTPException(
@@ -36,5 +58,3 @@ def login(payload: UsuarioLogin, session: Session = Depends(get_session)) -> Log
         biografia=user.biografia,
         access_token=token,
     )
-
-
