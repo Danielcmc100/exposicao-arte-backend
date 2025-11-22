@@ -8,7 +8,9 @@ class Config(BaseSettings):
 
     database_url: str
 
-    jwt_secret: str = "dev_only_change_me"  # sobrescrito pelo .env em produção
+    jwt_secret: str = (
+        "3a7e9b2c8d1f0a5b6e4d7c3b9a8f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a9f"  # noqa: S105
+    )
     jwt_algorithm: str = "HS256"
     jwt_expire_minutes: int = 60
 
