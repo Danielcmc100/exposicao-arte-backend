@@ -1,18 +1,18 @@
 """Rotas para gerenciamento de usuários."""
 
 from typing import Annotated
-
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status, HTTPException
 from sqlmodel import Session
-
 from database import get_session
 from models.usuario import UsuarioCreate, UsuarioDB, UsuarioResponse
+from security import get_password_hash
 from repositories.usuario import (
     adicionar_usuario,
     atualizar_usuario_bd,
     buscar_usuario_por_id,
     buscar_usuarios,
     remover_usuario,
+    get_usuario_by_email
 )
 
 rota = APIRouter(prefix="/usuarios", tags=["usuarios"])
@@ -47,21 +47,32 @@ def ler_usuario(
     return UsuarioResponse.model_validate(usuario) if usuario else None
 
 
-@rota.post("/")
+@rota.post("/", status_code=status.HTTP_201_CREATED)
 def criar_usuario(
     usuario: UsuarioCreate, session: SessionInjetada
 ) -> UsuarioResponse:
     """Cria um novo usuário no banco de dados.
 
     Returns:
-        UsuarioResponse: Dados do usuário criado.
+        UsuarioResponse: Usuário criado.
 
     """
-    usuario_db = UsuarioDB.model_validate(usuario)
-    return UsuarioResponse.model_validate(
-        adicionar_usuario(usuario_db, session)
-    )
+    usuario_existente = get_usuario_by_email(session, usuario.email)
+    if usuario_existente:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Usuário com este email já existe.",
+        )
 
+    usuario_db = UsuarioDB(
+        nome=usuario.nome,
+        email=usuario.email,
+        funcao=usuario.funcao,
+        biografia=usuario.biografia,
+        senha_hash=get_password_hash(usuario.senha),
+    ) # type: ignore
+    novo_usuario = adicionar_usuario(usuario_db, session)
+    return UsuarioResponse.model_validate(novo_usuario)
 
 @rota.put("/{usuario_id}")
 def atualizar_usuario(

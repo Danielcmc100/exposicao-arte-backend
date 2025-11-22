@@ -6,6 +6,9 @@ from sqlmodel import Session, select
 
 from models.usuario import UsuarioDB
 
+def get_usuario_by_email(session: Session, email: str) -> UsuarioDB | None:
+    stmt = select(UsuarioDB).where(UsuarioDB.email == email)
+    return session.exec(stmt).first()
 
 def buscar_usuarios(session: Session) -> Sequence[UsuarioDB]:
     """Retorna todos os usuários.

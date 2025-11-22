@@ -8,9 +8,15 @@ class Config(BaseSettings):
 
     database_url: str
 
+    jwt_secret: str = "dev_only_change_me"  # sobrescrito pelo .env em produção
+    jwt_algorithm: str = "HS256"
+    jwt_expire_minutes: int = 60
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
+        env_prefix="",  # sem prefixo
+        extra="ignore",
     )
 
 
