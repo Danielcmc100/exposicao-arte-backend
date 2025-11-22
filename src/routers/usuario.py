@@ -1,19 +1,21 @@
 """Rotas para gerenciamento de usuários."""
 
 from typing import Annotated
-from fastapi import APIRouter, Depends, status, HTTPException
+
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session
+
 from database import get_session
 from models.usuario import UsuarioCreate, UsuarioDB, UsuarioResponse
-from security import get_password_hash
 from repositories.usuario import (
     adicionar_usuario,
     atualizar_usuario_bd,
     buscar_usuario_por_id,
     buscar_usuarios,
+    get_usuario_by_email,
     remover_usuario,
-    get_usuario_by_email
 )
+from security import get_password_hash
 
 rota = APIRouter(prefix="/usuarios", tags=["usuarios"])
 
@@ -56,6 +58,9 @@ def criar_usuario(
     Returns:
         UsuarioResponse: Usuário criado.
 
+    Raises:
+        HTTPException: Se um usuário com o mesmo email já existir.
+
     """
     usuario_existente = get_usuario_by_email(session, usuario.email)
     if usuario_existente:
@@ -70,9 +75,10 @@ def criar_usuario(
         funcao=usuario.funcao,
         biografia=usuario.biografia,
         senha_hash=get_password_hash(usuario.senha),
-    ) # type: ignore
+    )  # type: ignore
     novo_usuario = adicionar_usuario(usuario_db, session)
     return UsuarioResponse.model_validate(novo_usuario)
+
 
 @rota.put("/{usuario_id}")
 def atualizar_usuario(
