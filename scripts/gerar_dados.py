@@ -35,6 +35,46 @@ def limpar_banco(engine: Engine):
 def popular_banco_com_regras(
     engine: Engine, n_usuarios: int = 50, n_eventos: int = 20
 ):
+    """Popula o banco de dados com dados de teste, seguindo regras de negócio para gerar um cenário mais realista."""
+
+    LOCAIS_EVENTOS = [
+        {
+            "nome": "Museu de Arte de São Paulo (MASP)",
+            "endereco": "Av. Paulista, 1578 - Bela Vista, São Paulo - SP, 01310-200",
+            "tipo": "Centro",
+            "latitude": -23.5613,
+            "longitude": -46.6565,
+        },
+        {
+            "nome": "Instituto Tomie Ohtake",
+            "endereco": "Av. Faria Lima, 201 - Pinheiros, São Paulo - SP, 05426-100",
+            "tipo": "Bairro",
+            "latitude": -23.5658,
+            "longitude": -46.7027,
+        },
+        {
+            "nome": "Pinacoteca de São Paulo",
+            "endereco": "Praça da Luz, 2 - Luz, São Paulo - SP, 01120-010",
+            "tipo": "Centro",
+            "latitude": -23.534,
+            "longitude": -46.634,
+        },
+        {
+            "nome": "Japan House São Paulo",
+            "endereco": "Av. Paulista, 52 - Bela Vista, São Paulo - SP, 01310-900",
+            "tipo": "Centro",
+            "latitude": -23.5694,
+            "longitude": -46.6527,
+        },
+        {
+            "nome": "Centro Cultural São Paulo",
+            "endereco": "R. Vergueiro, 1000 - Paraíso, São Paulo - SP, 01504-000",
+            "tipo": "Bairro",
+            "latitude": -23.571,
+            "longitude": -46.642,
+        },
+    ]
+
     with Session(engine) as session:
         # 1. Criar Usuários (Organizadores e Participantes)
         usuarios = []
@@ -60,13 +100,13 @@ def popular_banco_com_regras(
         print(f"Criando {n_eventos} eventos...")
         for _ in range(n_eventos):
             organizador = random.choice(organizadores)
-            local_nome = random.choice(list(locais_score.keys()))
+            local_selecionado = random.choice(LOCAIS_EVENTOS)
             data_evento = fake.date_time_between(
                 start_date="-1y", end_date="now"
             )
 
             # Lógica da Opção 2: Calcular Base
-            score_local = locais_score[local_nome]
+            score_local = locais_score[local_selecionado["tipo"]]
             score_dia = (
                 50 if data_evento.weekday() >= 5 else 10
             )  # Fim de semana vale mais
@@ -81,9 +121,11 @@ def popular_banco_com_regras(
             publico_final = int(publico_base + ruido)
 
             evento = EventoDB(
-                nome=f"Exposição {fake.word().title()}",
-                endereco=fake.address(),
-                local=local_nome,
+                nome=f"Exposição de {fake.word().title()} em {local_selecionado['nome']}",
+                endereco=local_selecionado["endereco"],
+                local=local_selecionado["nome"],
+                latitude=local_selecionado["latitude"],
+                longitude=local_selecionado["longitude"],
                 data=data_evento,
                 id_organizador=organizador.id,
                 id_responsavel=organizador.id,
