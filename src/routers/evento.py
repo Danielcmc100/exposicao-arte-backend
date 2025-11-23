@@ -7,7 +7,12 @@ from fastapi import APIRouter, Depends
 from sqlmodel import Session
 
 from database import get_session
-from models.evento import EventoCreate, EventoDB, EventoResponse
+from models.evento import (
+    EventoCreate,
+    EventoDB,
+    EventoResponse,
+    PrevisaoEvento,
+)
 from repositories.evento import (
     adicionar_evento,
     atualizar_evento_bd,
@@ -16,6 +21,7 @@ from repositories.evento import (
     buscar_eventos_por_obra,
     remover_evento,
 )
+from services.eventos import prever_pessoas_em_evento
 
 rota = APIRouter(prefix="/eventos", tags=["eventos"])
 
@@ -103,3 +109,19 @@ def obter_eventos_por_obras(
     """
     obras_list = buscar_eventos_por_obra(obra_id, session)
     return list(map(EventoResponse.model_validate, obras_list))
+
+
+@rota.post("/previsao")
+def prever_quantidade_pessoas_em_evento(evento: PrevisaoEvento) -> int:
+    """Prevê a quantidade de pessoas em um evento.
+
+    Args:
+        evento (PrevisaoEvento): Objeto contendo as características do evento
+            para previsão.
+
+    Returns:
+        int: Número previsto de pessoas no evento, arredondado para o inteiro
+            mais próximo.
+
+    """
+    return prever_pessoas_em_evento(evento)
