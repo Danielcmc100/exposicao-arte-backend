@@ -1,6 +1,7 @@
-import os
+# type: ignore
+# ruff: noqa ALL
+
 import random
-import sys
 
 import numpy as np
 from faker import Faker
@@ -8,15 +9,10 @@ from sqlalchemy.engine.base import Engine
 from sqlalchemy.engine.create import create_engine
 from sqlmodel import Session, SQLModel, delete
 
-# Add src to python path
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../src"))
-)
-
 from database import engine
 from models.avaliacoes_eventos import AvaliacaoEventoDB
 from models.evento import EventoDB
-from models.usuario import UsuarioDB
+from models.usuario import UsuarioDB, Funcao
 
 fake = Faker("pt_BR")
 
@@ -32,48 +28,49 @@ def limpar_banco(engine: Engine):
         print("Banco limpo!")
 
 
+LOCAIS_EVENTOS = [
+    {
+        "nome": "Museu de Arte de São Paulo (MASP)",
+        "endereco": "Av. Paulista, 1578 - Bela Vista, São Paulo - SP, 01310-200",
+        "tipo": "Centro",
+        "latitude": -23.5613,
+        "longitude": -46.6565,
+    },
+    {
+        "nome": "Instituto Tomie Ohtake",
+        "endereco": "Av. Faria Lima, 201 - Pinheiros, São Paulo - SP, 05426-100",
+        "tipo": "Bairro",
+        "latitude": -23.5658,
+        "longitude": -46.7027,
+    },
+    {
+        "nome": "Pinacoteca de São Paulo",
+        "endereco": "Praça da Luz, 2 - Luz, São Paulo - SP, 01120-010",
+        "tipo": "Centro",
+        "latitude": -23.534,
+        "longitude": -46.634,
+    },
+    {
+        "nome": "Japan House São Paulo",
+        "endereco": "Av. Paulista, 52 - Bela Vista, São Paulo - SP, 01310-900",
+        "tipo": "Centro",
+        "latitude": -23.5694,
+        "longitude": -46.6527,
+    },
+    {
+        "nome": "Centro Cultural São Paulo",
+        "endereco": "R. Vergueiro, 1000 - Paraíso, São Paulo - SP, 01504-000",
+        "tipo": "Bairro",
+        "latitude": -23.571,
+        "longitude": -46.642,
+    },
+]
+
+
 def popular_banco_com_regras(
     engine: Engine, n_usuarios: int = 50, n_eventos: int = 20
 ):
     """Popula o banco de dados com dados de teste, seguindo regras de negócio para gerar um cenário mais realista."""
-
-    LOCAIS_EVENTOS = [
-        {
-            "nome": "Museu de Arte de São Paulo (MASP)",
-            "endereco": "Av. Paulista, 1578 - Bela Vista, São Paulo - SP, 01310-200",
-            "tipo": "Centro",
-            "latitude": -23.5613,
-            "longitude": -46.6565,
-        },
-        {
-            "nome": "Instituto Tomie Ohtake",
-            "endereco": "Av. Faria Lima, 201 - Pinheiros, São Paulo - SP, 05426-100",
-            "tipo": "Bairro",
-            "latitude": -23.5658,
-            "longitude": -46.7027,
-        },
-        {
-            "nome": "Pinacoteca de São Paulo",
-            "endereco": "Praça da Luz, 2 - Luz, São Paulo - SP, 01120-010",
-            "tipo": "Centro",
-            "latitude": -23.534,
-            "longitude": -46.634,
-        },
-        {
-            "nome": "Japan House São Paulo",
-            "endereco": "Av. Paulista, 52 - Bela Vista, São Paulo - SP, 01310-900",
-            "tipo": "Centro",
-            "latitude": -23.5694,
-            "longitude": -46.6527,
-        },
-        {
-            "nome": "Centro Cultural São Paulo",
-            "endereco": "R. Vergueiro, 1000 - Paraíso, São Paulo - SP, 01504-000",
-            "tipo": "Bairro",
-            "latitude": -23.571,
-            "longitude": -46.642,
-        },
-    ]
 
     with Session(engine) as session:
         # 1. Criar Usuários (Organizadores e Participantes)
@@ -83,7 +80,7 @@ def popular_banco_com_regras(
             user = UsuarioDB(
                 nome=fake.name(),
                 email=fake.email(),
-                funcao="CONSUMIDOR",  # Variar conforme necessidade
+                funcao=Funcao.CONSUMIDOR,  # Variar conforme necessidade
                 biografia=fake.text(),
                 senha="hash_senha_falsa",
             )
