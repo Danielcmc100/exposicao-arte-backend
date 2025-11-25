@@ -54,34 +54,6 @@ def ler_avaliacao(
     )
 
 
-# @rota.get("/evento/{evento_id}")
-# def obter_avaliacoes_por_evento(
-#     evento_id: int, session: SessionInjetada
-# ) -> list[AvaliacaoObraResponse]:
-#     """Recupera todas as avaliações de um evento específico.
-
-#     Returns:
-#         list[AvaliacaoObraResponse]: Lista de avaliações do evento.
-
-#     """
-#     avaliacoes_list = buscar_avaliacoes_por_evento(evento_id, session)
-#     return list(map(AvaliacaoObraResponse.model_validate, avaliacoes_list))
-
-
-# @rota.get("/usuario/{usuario_id}")
-# def obter_avaliacoes_por_usuario(
-#     usuario_id: int, session: SessionInjetada
-# ) -> list[AvaliacaoObraResponse]:
-#     """Recupera todas as avaliações de um usuário específico.
-
-#     Returns:
-#         list[AvaliacaoObraResponse]: Lista de avaliações do usuário.
-
-#     """
-#     avaliacoes_list = buscar_avaliacoes_por_usuario(usuario_id, session)
-#     return list(map(AvaliacaoObraResponse.model_validate, avaliacoes_list))
-
-
 @rota.post("/")
 def criar_avaliacao(
     avaliacao: AvaliacaoObraCreate, session: SessionInjetada
