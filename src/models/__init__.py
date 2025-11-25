@@ -1,6 +1,7 @@
 """Módulo de modelos de banco de dados."""
 
 from .avaliacoes_eventos import AvaliacaoEventoDB
+from .avaliacoes_obras import AvaliacaoObraDB
 from .categoria import CategoriaDB
 from .comentario_evento import ComentarioEventoDB
 from .comentario_obra import ComentarioObraDB
@@ -12,6 +13,7 @@ from .usuario import UsuarioDB
 
 __all__ = [
     "AvaliacaoEventoDB",
+    "AvaliacaoObraDB",
     "CategoriaDB",
     "ComentarioEventoDB",
     "ComentarioObraDB",
