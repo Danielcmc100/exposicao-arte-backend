@@ -13,6 +13,8 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
 from testcontainers.postgres import PostgresContainer
 
+from src.app import app
+
 # Configurar logging para testes
 logging.basicConfig(
     level=logging.DEBUG,
@@ -120,6 +122,11 @@ def postgres_engine(
 
 
 @pytest.fixture
+def client(postgres_container: PostgresContainer) -> TestClient:
+    return TestClient(app)
+
+
+@pytest.fixture
 def app_with_db(
     postgres_container: PostgresContainer,
     alembic_config: Config,
@@ -162,11 +169,6 @@ def app_with_db(
     ]
     for module in modules_to_remove:
         del sys.modules[module]
-
-    # Limpar o metadata do SQLModel para evitar conflitos
-    from sqlmodel import SQLModel  # noqa: PLC0415
-
-    SQLModel.metadata.clear()
 
     # Executar migrations
     alembic_config.set_main_option("sqlalchemy.url", db_url)

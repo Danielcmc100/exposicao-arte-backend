@@ -1,16 +1,14 @@
 from fastapi.testclient import TestClient
 
-#teste
-def test_criar_usuario_completo(app_with_db: TestClient):
-    client = app_with_db
 
-   
+# teste
+def test_criar_usuario_completo(client: TestClient) -> None:
     payload = {
         "nome": "Vincent van Gogh",
         "email": "vincent@arte.com",
         "senha": "123456_super_secreta",
         "funcao": "artista",
-        "biografia": "Pintor pós-impressionista holandês."
+        "biografia": "Pintor pós-impressionista holandês.",
     }
 
     response = client.post("/usuarios/", json=payload)
@@ -24,5 +22,3 @@ def test_criar_usuario_completo(app_with_db: TestClient):
     assert data["email"] == "vincent@arte.com"
     assert data["funcao"] == "artista"
     assert data["biografia"] == "Pintor pós-impressionista holandês."
-
-    
