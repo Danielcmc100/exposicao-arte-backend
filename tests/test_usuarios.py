@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-
+#teste
 def test_criar_usuario_completo(app_with_db: TestClient):
     client = app_with_db
 
